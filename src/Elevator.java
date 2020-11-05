@@ -4,20 +4,29 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class Elevator {
     private static final String DOWN = "cap avall";
     private static final String UP = "cap adalt";
     private final Random rand = new Random();
     private int floor = rand.nextInt(10) + 1;
     ArrayList <Integer> plantes = new ArrayList<>();
+    //De objecte planta
+    ArrayList <Planta> Plantes = new ArrayList<>();
 
     public void simulateElevator() throws IOException {
+        //Iniciar arraylist amb plantes
+        System.out.printf("Quantes plantes te es puta edifici: ");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String  line = br.readLine();
+        iniciarPlantes(line);
+        System.out.println(Plantes);
+
         while (true){
             System.out.println("Ascensor a planta " + floor);
             System.out.print("Quina planta vols anar? ");
 
             //Llegim entrada
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String  lines = br.readLine();
 
             String[] strs = lines.trim().split("\\s+");
@@ -36,6 +45,17 @@ public class Elevator {
                 moveElevator(destinationFloor, movement);
             }
         }
+    }
+    void iniciarPlantes (String numPlantesString){
+        int numplantes = Integer.parseInt(numPlantesString);
+       Planta plantaMomentania ;
+        for (int i = 0; i < numplantes+1; i++) {
+            plantaMomentania = new Planta(i,false,false,false);
+            Plantes.add(i,plantaMomentania);
+
+        }
+
+
     }
 
 
