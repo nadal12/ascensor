@@ -1,10 +1,8 @@
 package elevator.view;
 
-import com.sun.source.tree.ForLoopTree;
 import elevator.ErrorLog;
 import elevator.EventsListener;
 import elevator.MVCEvents;
-import elevator.view.components.Floor;
 import elevator.view.components.Scene;
 
 import javax.swing.*;
@@ -18,16 +16,10 @@ public class View extends JFrame implements EventsListener {
     /**
      * Constants
      */
-    private static final int DEFAULT_WIDTH = 800;
-    private static final int DEFAULT_HEIGHT = 600;
-
-    private static final int STATUS_READY = 1;
-    private static final int STATUS_RUNNING = 2;
-    private static final int STATUS_FINISH = 3;
+    private static final int DEFAULT_WIDTH = 600;
+    private static final int DEFAULT_HEIGHT = 700;
 
     private MVCEvents mvcEvents;
-
-    private int status = STATUS_READY;
 
     /**
      * Constructor de la vista.

@@ -1,9 +1,11 @@
 package elevator.view.components;
 
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
-public class Floor extends JComponent {
+public class Floor extends JPanel {
 
     private int positionX;
     private int positionY;
@@ -17,6 +19,8 @@ public class Floor extends JComponent {
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-        graphics.drawRect(positionX,positionY, 100, 200);
+        //Dibujar planta aqui.
+        graphics.fillRect(positionX, positionY, 100, 200);
+        graphics.fillRect(positionX + 300, positionY, 100, 200);
     }
 }

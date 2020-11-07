@@ -16,9 +16,13 @@ public class Scene extends JComponent {
         super.paintComponent(graphics);
 
         for (int i = 0; i < numberOfFloors; i++) {
-            Floor floor = new Floor(100, 10);
 
+            //Dibujar escena aqui.
+            Floor floor = new Floor(70, 10 + (i * 210));
             floor.paintComponent(graphics);
+
+            Lift lift = new Lift(180, 120);
+            lift.paintComponent(graphics);
         }
     }
 
