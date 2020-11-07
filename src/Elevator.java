@@ -90,6 +90,7 @@ public class Elevator {
         String movementName = getMovementName(moveDirection);
         System.out.println("Ascensor l'ascensor esta anant ".concat(movementName).concat("..."));
         //comprovarDisPonibles(moveDirection);
+
         while (floor != destination) {
             floor += moveDirection;
             plantaPendent();
@@ -111,7 +112,7 @@ public class Elevator {
     * */
     void plantaPendent(){
         for (int j = 0; j < Plantes.size(); j ++){
-            if (floor == Plantes.get(j).getNumPlanta() &&  Plantes.get(j).isPendent() ){
+            if (floor == Plantes.get(j).getNumPlanta() &&  Plantes.get(j).isPendent() /*direccioboto = movement*/ ){
                //Llevam pendent perque ja lhem visitada
                 Plantes.get(j).setPendent(false);
                 //Levar planta de arraylist
