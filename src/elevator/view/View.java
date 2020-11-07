@@ -1,13 +1,14 @@
 package elevator.view;
 
+import com.sun.source.tree.ForLoopTree;
 import elevator.ErrorLog;
 import elevator.EventsListener;
 import elevator.MVCEvents;
+import elevator.view.components.Floor;
+import elevator.view.components.Scene;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 /**
  * @author nadalLlabres
@@ -58,11 +59,13 @@ public class View extends JFrame implements EventsListener {
      * Configurar la interfaz gráfica de usuario con Java Swing
      */
     private void configureUI() {
-        addComponentListener(new ComponentAdapter() {
-            public void componentResized(ComponentEvent componentEvent) {
+        configureScene();
+    }
 
-            }
-        });
+    public void configureScene() {
+        Scene scene = new Scene(3);
+        add(scene);
+        this.getContentPane().setBackground(new Color(13, 101,111));
     }
 
     /**
@@ -77,25 +80,6 @@ public class View extends JFrame implements EventsListener {
         setVisible(true);
         revalidate();
         repaint();
-    }
-
-    /**
-     * Configura la interfaz y realiza las acciones necesarias según el estado en el que se encuentra el programa.
-     *
-     * @param status estado actual.
-     */
-    public void updateStatus(int status) {
-        this.status = status;
-
-        switch (status) {
-            case STATUS_READY:
-                break;
-            case STATUS_RUNNING:
-                break;
-            case STATUS_FINISH:
-                mvcEvents.getController().notify("Stop");
-                break;
-        }
     }
 
     @Override

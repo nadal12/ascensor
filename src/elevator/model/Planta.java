@@ -1,4 +1,4 @@
-package elevator.controller;
+package elevator.model;
 
 public class Planta {
 
