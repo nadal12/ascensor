@@ -1,4 +1,5 @@
-import javax.xml.transform.Source;
+package elevator.controller;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -61,7 +62,7 @@ public class Elevator {
     }
     void imprimirPendents (){
         for (int i = 0; i < Plantes.size(); i++){
-            System.out.println("Planta: "+Plantes.get(i).getNumPlanta()+ " , pendent = "+Plantes.get(i).isPendent());
+            System.out.println("elevator.controller.Planta: "+Plantes.get(i).getNumPlanta()+ " , pendent = "+Plantes.get(i).isPendent());
         }
 
     }
@@ -146,9 +147,5 @@ public class Elevator {
                 }
             }
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        new Elevator().simulateElevator();
     }
 }

@@ -1,3 +1,5 @@
+package elevator.controller;
+
 public class Planta {
 
     private boolean pujar;
