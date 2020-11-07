@@ -8,12 +8,13 @@ public class Planta {
     private int numPlanta;
     private boolean ascensorAturat;
 
-    public Planta(int numPlanta, boolean pujar, boolean baixar,  boolean ascensorAturat) {
+    public Planta(int numPlanta, boolean pujar, boolean baixar, boolean ascensorAturat) {
         this.pujar = pujar;
         this.baixar = baixar;
         this.numPlanta = numPlanta;
         this.ascensorAturat = ascensorAturat;
     }
+
     void obri_portes() throws InterruptedException {
         Thread.sleep(500);
         this.ascensorAturat = true;
