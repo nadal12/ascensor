@@ -19,6 +19,8 @@ public class View extends JFrame implements EventsListener {
     private static final int DEFAULT_WIDTH = 600;
     private static final int DEFAULT_HEIGHT = 700;
 
+    private int numberOfFloors;
+
     private MVCEvents mvcEvents;
 
     /**
@@ -51,13 +53,31 @@ public class View extends JFrame implements EventsListener {
      * Configurar la interfaz gráfica de usuario con Java Swing
      */
     private void configureUI() {
+        setNumberOfFloors();
         configureScene();
     }
 
+    private void setNumberOfFloors() {
+        String[] options = {"2", "3", "4", "5", "6", "7", "8", "9", "10"};
+
+        // Cuadro de diálogo inicial.
+        String numberOfFloors = (String) JOptionPane.showInputDialog(null,
+                "¿Cuantas plantas tiene el edificio?", "Selecciona el número de plantas",
+                JOptionPane.QUESTION_MESSAGE,
+                null, options, options[2]);
+
+        // Si se aprieta el botón cancelar.
+        if (numberOfFloors == null) {
+            System.exit(0);
+        }
+
+        this.numberOfFloors = Integer.parseInt(numberOfFloors);
+    }
+
     public void configureScene() {
-        Scene scene = new Scene(3);
+        Scene scene = new Scene(numberOfFloors);
         add(scene);
-        this.getContentPane().setBackground(new Color(13, 101,111));
+        this.getContentPane().setBackground(new Color(13, 101, 111));
     }
 
     /**
@@ -68,6 +88,8 @@ public class View extends JFrame implements EventsListener {
         setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
+        // TODO intentar adaptar el resize.
+        setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
         revalidate();
