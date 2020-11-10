@@ -3,9 +3,10 @@ package elevator.view.components;
 import javax.swing.*;
 import java.awt.*;
 
-public class Lift extends JComponent {
+public class Lift extends JPanel {
 
-    private int positionX, positionY, width, height;
+    private int positionX, width, height;
+    private int positionY;
 
     public Lift(int positionX, int positionY, int width, int height) {
         this.positionX = positionX;
@@ -17,8 +18,22 @@ public class Lift extends JComponent {
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
+        graphics.drawRect(positionX, positionY, width, height);
+    }
 
-        graphics.drawRect(positionX, 5, width, height);
+    public void goUp() {
+        if (positionY >= 5) {
+            positionY = positionY - height;
+        }
+    }
 
+    public void goDown() {
+        // TODO comprovacio d'errors.
+        positionY = positionY + height;
+        repaint();
+    }
+
+    public void setFloor() {
+        //Pendent de fer
     }
 }

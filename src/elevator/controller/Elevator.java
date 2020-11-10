@@ -1,6 +1,8 @@
 package elevator.controller;
 
+import elevator.MVCEvents;
 import elevator.model.Planta;
+import elevator.view.View;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,12 +20,18 @@ public class Elevator {
     ArrayList<Integer> entrada = new ArrayList<>();
     //De objecte planta
     ArrayList<Planta> Plantes = new ArrayList<>();
+    MVCEvents mvcEvents;
 
-    public void simulateElevator() throws IOException {
+    public void simulateElevator(MVCEvents mvcEvents) throws IOException {
+        this.mvcEvents = mvcEvents;
+
         //Iniciar arraylist amb plantes
         System.out.printf("Quantes plantes te es puta edifici: ");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String line = br.readLine();
+
+        //OPERACIO DE BAIXAR PLANTA NOTIFICANT A LA VISTA.
+        mvcEvents.getView().notify("Baixa");
         iniciarPlantes(line);
         //System.out.println(Plantes);
 

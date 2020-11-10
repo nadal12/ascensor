@@ -15,7 +15,7 @@ public class Controller implements EventsListener {
     public Controller(MVCEvents mvcEvents) {
         this.mvcEvents = mvcEvents;
         try {
-            new Elevator().simulateElevator();
+            new Elevator().simulateElevator(mvcEvents);
         } catch (IOException e) {
             e.printStackTrace();
         }

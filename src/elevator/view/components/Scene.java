@@ -7,6 +7,7 @@ public class Scene extends JComponent {
 
     private int numberOfFloors;
     private final static int MARGIN_BETWEEN_FLOORS = 5;
+    private Lift lift;
 
     public Scene(int numberOfFloors) {
         this.numberOfFloors = numberOfFloors;
@@ -26,12 +27,16 @@ public class Scene extends JComponent {
             floor.paintComponent(graphics);
             drawPointer = drawPointer + floorHeight + MARGIN_BETWEEN_FLOORS;
 
-            Lift lift = new Lift(180, 120, 180, floorHeight);
+            lift = new Lift(180, 5, 180, floorHeight);
             lift.paintComponent(graphics);
         }
     }
 
     public int getNumberOfFloors() {
         return numberOfFloors;
+    }
+
+    public Lift getLift() {
+        return lift;
     }
 }

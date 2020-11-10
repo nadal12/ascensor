@@ -20,6 +20,7 @@ public class View extends JFrame implements EventsListener {
     private static final int DEFAULT_HEIGHT = 700;
 
     private int numberOfFloors;
+    private Scene scene;
 
     private MVCEvents mvcEvents;
 
@@ -75,7 +76,7 @@ public class View extends JFrame implements EventsListener {
     }
 
     public void configureScene() {
-        Scene scene = new Scene(numberOfFloors);
+        scene = new Scene(numberOfFloors);
         add(scene);
         this.getContentPane().setBackground(new Color(13, 101, 111));
     }
@@ -99,5 +100,11 @@ public class View extends JFrame implements EventsListener {
     @Override
     public void notify(String message) {
         System.out.println("Mensaje en Vista: " + message);
+
+        if (message.startsWith("Baixa")) {
+            scene.getLift().goDown();
+            scene.repaint();
+
+        }
     }
 }
