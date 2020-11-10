@@ -26,7 +26,7 @@ public class Scene extends JComponent {
             floor.paintComponent(graphics);
             drawPointer = drawPointer + floorHeight + MARGIN_BETWEEN_FLOORS;
 
-            Lift lift = new Lift(180, 120);
+            Lift lift = new Lift(180, 120, 180, floorHeight);
             lift.paintComponent(graphics);
         }
     }
