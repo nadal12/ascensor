@@ -4,23 +4,21 @@ package elevator.view.components;
 import javax.swing.*;
 import java.awt.*;
 
-public class Floor extends JPanel {
+public class Floor extends JComponent {
 
-    private int positionX;
-    private int positionY;
-    private int floorHeight;
+    private static int MARGIN = 5;
+    private static int WALL_WIDTH = 100;
+    private int liftWidth, floorHeight;
 
-    public Floor(int positionX, int positionY, int floorHeight) {
-        this.positionX = positionX;
-        this.positionY = positionY;
+    public Floor(int floorHeight, int liftWidth) {
         this.floorHeight = floorHeight;
+        this.liftWidth = liftWidth;
     }
 
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-
-        graphics.fillRect(positionX, positionY, 100, floorHeight);
-        graphics.fillRect(positionX + 300, positionY, 100, floorHeight);
+        graphics.fillRect(0, 0, WALL_WIDTH, floorHeight);
+        graphics.fillRect(liftWidth + MARGIN, 0, WALL_WIDTH, floorHeight);
     }
 }

@@ -15,7 +15,7 @@ public class Elevator {
     private static final String DOWN = "cap avall";
     private static final String UP = "cap adalt";
     private final Random rand = new Random();
-    private int floor = rand.nextInt(10) + 1;
+    private int floor;
     private int movement;
     ArrayList<Integer> entrada = new ArrayList<>();
     //De objecte planta
@@ -24,15 +24,14 @@ public class Elevator {
 
     public void simulateElevator(MVCEvents mvcEvents) throws IOException {
         this.mvcEvents = mvcEvents;
+        floor = mvcEvents.getView().getActualFloor();
 
         //Iniciar arraylist amb plantes
-        System.out.printf("Quantes plantes te es puta edifici: ");
+        //System.out.printf("Quantes plantes te es puta edifici: ");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String line = br.readLine();
+        //String line = br.readLine();
 
-        //OPERACIO DE BAIXAR PLANTA NOTIFICANT A LA VISTA.
-        mvcEvents.getView().notify("Baixa");
-        iniciarPlantes(line);
+        iniciarPlantes(mvcEvents.getView().getNumberOfFloors());
         //System.out.println(Plantes);
 
         while (true) {
@@ -48,6 +47,7 @@ public class Elevator {
             for (int i = 0; i < strs.length; i++) {
                 entrada.add(Integer.parseInt(strs[i]));
             }
+
             //Posar plantes a pendets de visitar
             for (int i = 0; i < entrada.size(); i++) {
                 for (int j = 0; j < Plantes.size(); j++) {
@@ -67,6 +67,7 @@ public class Elevator {
                 System.out.println("Obrint portes");
             } else {
                 moveElevator(destinationFloor, movement);
+                mvcEvents.getView().setFloor(destinationFloor);
             }
         }
     }
@@ -78,10 +79,9 @@ public class Elevator {
 
     }
 
-    void iniciarPlantes(String numPlantesString) {
-        int numplantes = Integer.parseInt(numPlantesString);
+    void iniciarPlantes(int numPlantes) {
         Planta plantaMomentania;
-        for (int i = 0; i < numplantes + 1; i++) {
+        for (int i = 0; i < numPlantes + 1; i++) {
             plantaMomentania = new Planta(i, false, false, false);
             Plantes.add(i, plantaMomentania);
         }
@@ -106,6 +106,7 @@ public class Elevator {
         //comprovarDisPonibles(moveDirection);
         while (floor != destination) {
             floor += moveDirection;
+            mvcEvents.getView().setFloor(floor);
             plantaPendent();
             System.out.println(floor);
             try {
