@@ -3,7 +3,8 @@ package elevator.view;
 import elevator.ErrorLog;
 import elevator.EventsListener;
 import elevator.MVCEvents;
-import elevator.view.components.Scene;
+import elevator.view.components.Floor;
+import elevator.view.components.Lift;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,10 @@ public class View extends JFrame implements EventsListener {
     private static final int DEFAULT_HEIGHT = 700;
 
     private int numberOfFloors;
+
+    // Scene attributes.
+    private final static int MARGIN_BETWEEN_FLOORS = 5;
+    private Lift lift;
 
     private MVCEvents mvcEvents;
 
@@ -75,9 +80,20 @@ public class View extends JFrame implements EventsListener {
     }
 
     public void configureScene() {
-        Scene scene = new Scene(numberOfFloors);
-        add(scene);
-        this.getContentPane().setBackground(new Color(13, 101, 111));
+        // Cálculos.
+        int floorHeight = (DEFAULT_HEIGHT - 50 - (MARGIN_BETWEEN_FLOORS * numberOfFloors)) / numberOfFloors;
+
+        int drawPointer = MARGIN_BETWEEN_FLOORS;
+
+        for (int i = 0; i < numberOfFloors; i++) {
+            Floor floor = new Floor(floorHeight, 300);
+            add(floor).setBounds(100, drawPointer, DEFAULT_WIDTH, floorHeight);
+
+            drawPointer = drawPointer + floorHeight + MARGIN_BETWEEN_FLOORS;
+        }
+
+        lift = new Lift(numberOfFloors, floorHeight);
+        add(lift);
     }
 
     /**
@@ -99,5 +115,28 @@ public class View extends JFrame implements EventsListener {
     @Override
     public void notify(String message) {
         System.out.println("Mensaje en Vista: " + message);
+
+        if (message.startsWith("Baixa")) {
+            lift.goDown();
+            repaint();
+        }
+
+        if (message.startsWith("Puja")) {
+            lift.goUp();
+            repaint();
+        }
+    }
+
+    public int getNumberOfFloors() {
+        return numberOfFloors;
+    }
+
+    public int getActualFloor() {
+        return lift.getActualFloor();
+    }
+
+    public void setFloor(int floor) {
+        lift.setFloor(floor);
+        repaint();
     }
 }

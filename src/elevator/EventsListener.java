@@ -9,5 +9,5 @@ package elevator;
  * @author nadalLlabres
  */
 public interface EventsListener {
-    void notify(String message);
+    void notify(String message) throws InterruptedException;
 }
