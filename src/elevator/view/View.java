@@ -8,7 +8,6 @@ import elevator.view.components.Lift;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.jar.JarEntry;
 
 /**
  * @author nadalLlabres
@@ -114,7 +113,7 @@ public class View extends JFrame implements EventsListener {
     }
 
     @Override
-    public void notify(String message)  {
+    public void notify(String message) {
         System.out.println("Mensaje en Vista: " + message);
 
         if (message.startsWith("Baixa")) {

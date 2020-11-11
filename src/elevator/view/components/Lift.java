@@ -39,19 +39,19 @@ public class Lift extends JPanel {
 
     public void goDown() {
         if (actualFloor > 0) {
-           // previousY = positionY;
+            // previousY = positionY;
             actualFloor--;
             repaint();
-           // animate();
+            // animate();
         }
     }
 
     public void setFloor(int floor) {
         if (floor >= 0 && floor < numberOfFloors) {
-           // previousY = positionY;
+            // previousY = positionY;
             actualFloor = floor;
             repaint();
-           // animate();
+            // animate();
         }
     }
 

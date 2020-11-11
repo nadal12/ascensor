@@ -2,7 +2,6 @@ package elevator.controller;
 
 import elevator.MVCEvents;
 import elevator.model.Planta;
-import elevator.view.View;
 
 import java.io.BufferedReader;
 import java.io.IOException;
