@@ -23,14 +23,14 @@ public class Elevator {
 
     public void simulateElevator(MVCEvents mvcEvents) throws IOException {
         this.mvcEvents = mvcEvents;
-        floor = mvcEvents.getView().getActualFloor();
+        //floor = mvcEvents.getView().getActualFloor();
 
         //Iniciar arraylist amb plantes
         //System.out.printf("Quantes plantes te es puta edifici: ");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //String line = br.readLine();
 
-        iniciarPlantes(mvcEvents.getView().getNumberOfFloors());
+      //  iniciarPlantes(mvcEvents.getView().getNumberOfFloors());
         //System.out.println(Plantes);
 
         while (true) {
@@ -66,7 +66,7 @@ public class Elevator {
                 System.out.println("Obrint portes");
             } else {
                 moveElevator(destinationFloor, movement);
-                mvcEvents.getView().setFloor(destinationFloor);
+               // mvcEvents.getView().setFloor(destinationFloor);
             }
         }
     }
@@ -105,7 +105,7 @@ public class Elevator {
         //comprovarDisPonibles(moveDirection);
         while (floor != destination) {
             floor += moveDirection;
-            mvcEvents.getView().setFloor(floor);
+            //mvcEvents.getView().setFloor(floor);
             plantaPendent();
             System.out.println(floor);
             try {

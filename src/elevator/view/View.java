@@ -8,6 +8,8 @@ import elevator.view.components.Lift;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author nadalLlabres
@@ -87,6 +89,7 @@ public class View extends JFrame implements EventsListener {
 
         for (int i = 0; i < numberOfFloors; i++) {
             Floor floor = new Floor(floorHeight, 300);
+
             add(floor).setBounds(100, drawPointer, DEFAULT_WIDTH, floorHeight);
 
             drawPointer = drawPointer + floorHeight + MARGIN_BETWEEN_FLOORS;
