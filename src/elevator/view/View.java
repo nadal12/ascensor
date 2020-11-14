@@ -88,7 +88,7 @@ public class View extends JFrame implements EventsListener {
         int drawPointer = MARGIN_BETWEEN_FLOORS;
 
         for (int i = 0; i < numberOfFloors; i++) {
-            Floor floor = new Floor(floorHeight, 300);
+            Floor floor = new Floor(floorHeight, 300, Math.abs(i - numberOfFloors + 1));
 
             add(floor).setBounds(100, drawPointer, DEFAULT_WIDTH, floorHeight);
 
