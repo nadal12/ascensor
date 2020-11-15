@@ -16,13 +16,13 @@ public class Floor extends JComponent {
         this.floorNumber = floorNumber;
 
         JLabel floorNumberLabel = new JLabel("Floor: " + floorNumber);
-        add(floorNumberLabel).setBounds(5, -20, 180/2, floorHeight/2);
+        add(floorNumberLabel).setBounds(5, 0, 180/2, floorHeight/2);
 
         JButton up = new JButton("Pujar");
-        add(up).setBounds(310, 40, 180/2, floorHeight/2);
+        add(up).setBounds(310, 45, 180/2, floorHeight/4);
 
         JButton down = new JButton("Baixar");
-        add(down).setBounds(5, 40, 180/2, floorHeight/2);
+        add(down).setBounds(5, 45, 180/2, floorHeight/4);
     }
 
     @Override
