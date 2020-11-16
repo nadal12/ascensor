@@ -13,7 +13,6 @@ import java.util.Random;
 public class Elevator {
     private static final String DOWN = "cap avall";
     private static final String UP = "cap adalt";
-    private final Random rand = new Random();
     private int floor;
     private int movement;
     ArrayList<Integer> entrada = new ArrayList<>();

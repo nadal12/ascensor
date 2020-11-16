@@ -9,6 +9,7 @@ public class Lift extends JPanel {
     private int positionY;
     private int previousY;
     private int actualFloor = 0;
+    private boolean doorOpen = true;
 
     public Lift(int numberOfFloors, int floorHeight) {
         this.numberOfFloors = numberOfFloors;
@@ -16,9 +17,6 @@ public class Lift extends JPanel {
         this.setBackground(new Color(13, 101, 111));
 
         setLayout(new FlowLayout());
-
-        //JButton button = new JButton("Heeyy");
-       // add(button).setBounds(210, positionY, 180/2, floorHeight/2);
     }
 
     @Override
@@ -32,10 +30,15 @@ public class Lift extends JPanel {
         positionY = super.getHeight() - 5 - ((actualFloor + 1) * (floorHeight + 5));
         graphics.fillRect(210, positionY, 180, floorHeight);
 
+        JLabel doorLabel;
 
+        if (doorOpen) {
+            doorLabel = new JLabel("Obert");
+        } else {
+            doorLabel = new JLabel("Tancat");
+        }
 
-        //JButton button = new JButton("Heeyy2");
-        //add(button).setBounds(210, positionY, 180, floorHeight);
+        add(doorLabel).setBounds(290, positionY, 30, floorHeight);
     }
 
     public void goUp() {
@@ -63,6 +66,14 @@ public class Lift extends JPanel {
             repaint();
             // animate();
         }
+    }
+
+    public void closeDoor() {
+        doorOpen = false;
+    }
+
+    public void openDoor() {
+        doorOpen = true;
     }
 
     public int getActualFloor() {
