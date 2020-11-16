@@ -16,8 +16,8 @@ public class MVCEvents {
     private void init() {
         view = new View("Elevator - Sistemes Intel·ligents", this);
         view.start();
-        model = new Model(this);
         controller = new Controller(this);
+        model = new Model(this);
     }
 
     public static void main(String[] args) {

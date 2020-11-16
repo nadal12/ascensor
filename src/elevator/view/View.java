@@ -6,8 +6,13 @@ import elevator.MVCEvents;
 import elevator.view.components.Floor;
 import elevator.view.components.Lift;
 
+import javax.naming.BinaryRefAddr;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 /**
  * @author nadalLlabres
@@ -25,6 +30,7 @@ public class View extends JFrame implements EventsListener {
     // Scene attributes.
     private final static int MARGIN_BETWEEN_FLOORS = 5;
     private Lift lift;
+    private ArrayList<Integer> selectedFloors = new ArrayList<>();
 
     private MVCEvents mvcEvents;
 
@@ -86,7 +92,8 @@ public class View extends JFrame implements EventsListener {
         int drawPointer = MARGIN_BETWEEN_FLOORS;
 
         for (int i = 0; i < numberOfFloors; i++) {
-            Floor floor = new Floor(floorHeight, 300);
+            Floor floor = new Floor(floorHeight, 300, Math.abs(i - numberOfFloors + 1));
+
             add(floor).setBounds(100, drawPointer, DEFAULT_WIDTH, floorHeight);
 
             drawPointer = drawPointer + floorHeight + MARGIN_BETWEEN_FLOORS;
@@ -104,11 +111,80 @@ public class View extends JFrame implements EventsListener {
         setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        // TODO intentar adaptar el resize.
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
         revalidate();
+        repaint();
+    }
+
+    public void selectDestinationFloor() {
+        JFrame floorSelector = new JFrame();
+        floorSelector.setUndecorated(true);
+        floorSelector.setVisible(true);
+        setEnabled(false); //Desactivar frame principal
+        floorSelector.setResizable(false);
+        floorSelector.pack();
+
+        //Establecer tamaño del frame
+        floorSelector.setLocationRelativeTo(null);
+        floorSelector.setSize(DEFAULT_WIDTH/2, DEFAULT_HEIGHT/3);
+        floorSelector.setAlwaysOnTop(true);
+
+        JLabel text = new JLabel("Selecciona las plantas a las que deseas ir y pulsa confirmar");
+        floorSelector.add(text, BorderLayout.NORTH);
+
+
+        JPanel buttonsGrid = new JPanel();
+        buttonsGrid.setLayout(new GridLayout(4, 3));
+        for (int i = 0; i < numberOfFloors; i++) {
+            JButton button = new JButton(String.valueOf(i + 1));
+            button.addActionListener(e -> {
+
+                //Cambiar color para que se vea que esta seleccionado.
+                button.setBackground(Color.RED);
+                button.setContentAreaFilled(false);
+                button.setOpaque(true);
+
+                //Añadir al array de seleccionados.
+                if (!selectedFloors.contains(Integer.valueOf(button.getText()))) {
+                    selectedFloors.add(Integer.valueOf(button.getText()));
+                    System.out.println(selectedFloors);
+                }
+
+            });
+            buttonsGrid.add(button);
+        }
+
+        floorSelector.add(buttonsGrid, BorderLayout.CENTER);
+
+        //Botón de aceptar.
+        JButton confirm = new JButton("Confirmar");
+        floorSelector.add(confirm, BorderLayout.SOUTH);
+        confirm.addActionListener(e -> {
+            floorSelector.dispose();
+            setEnabled(true); //Activar frame principal
+
+            setAlwaysOnTop(true); //Para que no se quede minimizado.
+            setAlwaysOnTop(false);
+            mvcEvents.getController().getElevator().notify("floorsSelected");
+        });
+    }
+
+    public ArrayList<Integer> getSelectedFloors() {
+        return selectedFloors;
+    }
+
+    public int getNumberOfFloors() {
+        return numberOfFloors;
+    }
+
+    public int getActualFloor() {
+        return lift.getActualFloor();
+    }
+
+    public void setFloor(int floor) {
+        lift.setFloor(floor);
         repaint();
     }
 
@@ -125,18 +201,17 @@ public class View extends JFrame implements EventsListener {
             lift.goUp();
             repaint();
         }
-    }
 
-    public int getNumberOfFloors() {
-        return numberOfFloors;
-    }
+        if (message.startsWith("selectFloors")) {
+            selectDestinationFloor();
+        }
 
-    public int getActualFloor() {
-        return lift.getActualFloor();
-    }
+        if (message.startsWith("closeDoor")) {
+            lift.closeDoor();
+        }
 
-    public void setFloor(int floor) {
-        lift.setFloor(floor);
-        repaint();
+        if (message.startsWith("openDoor")) {
+            lift.openDoor();
+        }
     }
 }
