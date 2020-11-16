@@ -14,6 +14,11 @@ public class Lift extends JPanel {
         this.numberOfFloors = numberOfFloors;
         this.floorHeight = floorHeight;
         this.setBackground(new Color(13, 101, 111));
+
+        setLayout(new FlowLayout());
+
+        //JButton button = new JButton("Heeyy");
+       // add(button).setBounds(210, positionY, 180/2, floorHeight/2);
     }
 
     @Override
@@ -26,10 +31,11 @@ public class Lift extends JPanel {
         }
         positionY = super.getHeight() - 5 - ((actualFloor + 1) * (floorHeight + 5));
         graphics.fillRect(210, positionY, 180, floorHeight);
-        //JButton button = new JButton("Heeyy");
-       // add(button).setBounds(210, positionY, 180/2, floorHeight/2);
+
+
+
         //JButton button = new JButton("Heeyy2");
-      //  add(button).setBounds(210, positionY, 180, floorHeight);
+        //add(button).setBounds(210, positionY, 180, floorHeight);
     }
 
     public void goUp() {
