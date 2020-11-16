@@ -1,16 +1,13 @@
 package elevator.controller;
 
+import elevator.EventsListener;
 import elevator.MVCEvents;
 import elevator.model.Planta;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Random;
 
-
-public class Elevator {
+public class Elevator implements EventsListener {
     private static final String DOWN = "cap avall";
     private static final String UP = "cap adalt";
     private int floor;
@@ -19,6 +16,7 @@ public class Elevator {
     //De objecte planta
     ArrayList<Planta> Plantes = new ArrayList<>();
     MVCEvents mvcEvents;
+    private boolean floorsSelected = false;
 
     public void simulateElevator(MVCEvents mvcEvents) throws IOException {
         this.mvcEvents = mvcEvents;
@@ -26,25 +24,35 @@ public class Elevator {
 
         //Iniciar arraylist amb plantes
         //System.out.printf("Quantes plantes te es puta edifici: ");
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+       // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //String line = br.readLine();
 
       //  iniciarPlantes(mvcEvents.getView().getNumberOfFloors());
         //System.out.println(Plantes);
+
 
         while (true) {
             System.out.println("Ascensor a planta " + floor);
             System.out.print("Quina planta vols anar? ");
 
             //Llegim entrada
-            String lines = br.readLine();
+            //String lines = br.readLine();
 
-            String[] strs = lines.trim().split("\\s+");
+            //String[] strs = lines.trim().split("\\s+");
 
             //Aqui tenim sa llista de ses plantes pendents
-            for (int i = 0; i < strs.length; i++) {
-                entrada.add(Integer.parseInt(strs[i]));
+            //for (int i = 0; i < strs.length; i++) {
+             //   entrada.add(Integer.parseInt(strs[i]));
+            //}
+
+            mvcEvents.getView().notify("selectFloors");
+
+            while (!floorsSelected) {
+                Thread.yield();
             }
+            System.out.println("Liberado");
+            floorsSelected = false;
+            entrada = mvcEvents.getView().getSelectedFloors();
 
             //Posar plantes a pendets de visitar
             for (int i = 0; i < entrada.size(); i++) {
@@ -62,10 +70,11 @@ public class Elevator {
             movement = getMovementDirection(destinationFloor);
 
             if (movement == 0) {
+                mvcEvents.getView().notify("openDoor");
                 System.out.println("Obrint portes");
             } else {
                 moveElevator(destinationFloor, movement);
-               // mvcEvents.getView().setFloor(destinationFloor);
+                mvcEvents.getView().setFloor(destinationFloor);
             }
         }
     }
@@ -104,7 +113,7 @@ public class Elevator {
         //comprovarDisPonibles(moveDirection);
         while (floor != destination) {
             floor += moveDirection;
-            //mvcEvents.getView().setFloor(floor);
+            mvcEvents.getView().setFloor(floor);
             plantaPendent();
             System.out.println(floor);
             try {
@@ -140,6 +149,7 @@ public class Elevator {
                     e.printStackTrace();
                 }
                 System.out.println("Tancant portes");
+                mvcEvents.getView().notify("closeDoor");
             }
         }
     }
@@ -159,6 +169,13 @@ public class Elevator {
                             + entrada.get(i));
                 }
             }
+        }
+    }
+
+    @Override
+    public void notify(String message) {
+        if (message.startsWith("floorsSelected")) {
+            floorsSelected = true;
         }
     }
 }

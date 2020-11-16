@@ -11,16 +11,21 @@ import java.io.IOException;
 public class Controller implements EventsListener {
 
     private MVCEvents mvcEvents;
+    private Elevator elevator;
 
     public Controller(MVCEvents mvcEvents) {
         this.mvcEvents = mvcEvents;
         try {
-            new Elevator().simulateElevator(mvcEvents);
+            elevator = new Elevator();
+            elevator.simulateElevator(mvcEvents);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public Elevator getElevator() {
+        return elevator;
+    }
 
     @Override
     public void notify(String message) {

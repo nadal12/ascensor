@@ -101,8 +101,6 @@ public class View extends JFrame implements EventsListener {
 
         lift = new Lift(numberOfFloors, floorHeight);
         add(lift);
-
-        selectDestinationFloor();
     }
 
     /**
@@ -113,27 +111,11 @@ public class View extends JFrame implements EventsListener {
         setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        // TODO intentar adaptar el resize.
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
         revalidate();
         repaint();
-    }
-
-    @Override
-    public void notify(String message) {
-        System.out.println("Mensaje en Vista: " + message);
-
-        if (message.startsWith("Baixa")) {
-            lift.goDown();
-            repaint();
-        }
-
-        if (message.startsWith("Puja")) {
-            lift.goUp();
-            repaint();
-        }
     }
 
     public void selectDestinationFloor() {
@@ -185,7 +167,12 @@ public class View extends JFrame implements EventsListener {
 
             setAlwaysOnTop(true); //Para que no se quede minimizado.
             setAlwaysOnTop(false);
+            mvcEvents.getController().getElevator().notify("floorsSelected");
         });
+    }
+
+    public ArrayList<Integer> getSelectedFloors() {
+        return selectedFloors;
     }
 
     public int getNumberOfFloors() {
@@ -199,5 +186,32 @@ public class View extends JFrame implements EventsListener {
     public void setFloor(int floor) {
         lift.setFloor(floor);
         repaint();
+    }
+
+    @Override
+    public void notify(String message) {
+        System.out.println("Mensaje en Vista: " + message);
+
+        if (message.startsWith("Baixa")) {
+            lift.goDown();
+            repaint();
+        }
+
+        if (message.startsWith("Puja")) {
+            lift.goUp();
+            repaint();
+        }
+
+        if (message.startsWith("selectFloors")) {
+            selectDestinationFloor();
+        }
+
+        if (message.startsWith("closeDoor")) {
+            lift.closeDoor();
+        }
+
+        if (message.startsWith("openDoor")) {
+            lift.openDoor();
+        }
     }
 }
