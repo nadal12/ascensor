@@ -2,17 +2,25 @@ package elevator.model;
 
 public class Planta {
 
-    private boolean pujar;
-    private boolean baixar;
+
     private boolean pendent;
     private int numPlanta;
     private boolean ascensorAturat;
+    private int dir = 0;
 
-    public Planta(int numPlanta, boolean pujar, boolean baixar, boolean ascensorAturat) {
-        this.pujar = pujar;
-        this.baixar = baixar;
+    public Planta(int numPlanta, boolean ascensorAturat, int dir) {
+
         this.numPlanta = numPlanta;
         this.ascensorAturat = ascensorAturat;
+        this.dir = dir;
+    }
+
+    public int getDir() {
+        return dir;
+    }
+
+    public void setDir(int dir) {
+        this.dir = dir;
     }
 
     void obri_portes() throws InterruptedException {
@@ -24,6 +32,7 @@ public class Planta {
     public boolean isPendent() {
         return pendent;
     }
+
 
     public void setPendent(boolean pendent) {
         this.pendent = pendent;

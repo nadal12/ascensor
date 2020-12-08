@@ -52,6 +52,7 @@ public class Elevator implements EventsListener {
             }
             System.out.println("Liberado");
             floorsSelected = false;
+
             entrada = mvcEvents.getView().getSelectedFloors();
 
             //Posar plantes a pendets de visitar
@@ -89,7 +90,7 @@ public class Elevator implements EventsListener {
     void iniciarPlantes(int numPlantes) {
         Planta plantaMomentania;
         for (int i = 0; i < numPlantes + 1; i++) {
-            plantaMomentania = new Planta(i, false, false, false);
+            plantaMomentania = new Planta(i, false,0);
             Plantes.add(i, plantaMomentania);
         }
     }
@@ -132,7 +133,9 @@ public class Elevator implements EventsListener {
      * FALTA PER COMPROVAR si es boto es per pujar o baixar. Se pot emplear sa variable movement
      * */
     void plantaPendent() {
+
         for (int j = 0; j < Plantes.size(); j++) {
+            if (Plantes.get(j).getDir()==69){ //Cridada desde panell
             if (floor == Plantes.get(j).getNumPlanta() && Plantes.get(j).isPendent()) {
                 //Llevam pendent perque ja lhem visitada
                 Plantes.get(j).setPendent(false);
@@ -150,6 +153,26 @@ public class Elevator implements EventsListener {
                 }
                 System.out.println("Tancant portes");
                 mvcEvents.getView().notify("closeDoor");
+            }
+        }else   {//Cridada per boto exterior
+                if (floor == Plantes.get(j).getNumPlanta() && Plantes.get(j).isPendent() && Plantes.get(j).getDir()== movement) {
+                    //Llevam pendent perque ja lhem visitada
+                    Plantes.get(j).setPendent(false);
+                    //Levar planta de arraylist
+                    for (int i = 0; i < entrada.size(); i++) {
+                        if (entrada.get(i) == floor) {
+                            entrada.remove(i);
+                        }
+                    }
+                    System.out.println("Obrint portes de la planta: " + Plantes.get(j).getNumPlanta());
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Tancant portes");
+                    mvcEvents.getView().notify("closeDoor");
+                }
             }
         }
     }
