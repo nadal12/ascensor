@@ -6,12 +6,8 @@ import elevator.MVCEvents;
 import elevator.view.components.Floor;
 import elevator.view.components.Lift;
 
-import javax.naming.BinaryRefAddr;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 /**
@@ -128,7 +124,7 @@ public class View extends JFrame implements EventsListener {
 
         //Establecer tamaño del frame
         floorSelector.setLocationRelativeTo(null);
-        floorSelector.setSize(DEFAULT_WIDTH/2, DEFAULT_HEIGHT/3);
+        floorSelector.setSize(DEFAULT_WIDTH / 2, DEFAULT_HEIGHT / 3);
         floorSelector.setAlwaysOnTop(true);
 
         JLabel text = new JLabel("Selecciona las plantas a las que deseas ir y pulsa confirmar");
@@ -203,7 +199,7 @@ public class View extends JFrame implements EventsListener {
         }
 
         if (message.startsWith("selectFloors")) {
-            selectDestinationFloor();
+            //selectDestinationFloor();
         }
 
         if (message.startsWith("closeDoor")) {

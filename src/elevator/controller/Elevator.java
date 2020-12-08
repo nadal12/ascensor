@@ -24,10 +24,10 @@ public class Elevator implements EventsListener {
 
         //Iniciar arraylist amb plantes
         //System.out.printf("Quantes plantes te es puta edifici: ");
-       // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //String line = br.readLine();
 
-      //  iniciarPlantes(mvcEvents.getView().getNumberOfFloors());
+        //  iniciarPlantes(mvcEvents.getView().getNumberOfFloors());
         //System.out.println(Plantes);
 
 
@@ -42,7 +42,7 @@ public class Elevator implements EventsListener {
 
             //Aqui tenim sa llista de ses plantes pendents
             //for (int i = 0; i < strs.length; i++) {
-             //   entrada.add(Integer.parseInt(strs[i]));
+            //   entrada.add(Integer.parseInt(strs[i]));
             //}
 
             mvcEvents.getView().notify("selectFloors");
@@ -90,7 +90,7 @@ public class Elevator implements EventsListener {
     void iniciarPlantes(int numPlantes) {
         Planta plantaMomentania;
         for (int i = 0; i < numPlantes + 1; i++) {
-            plantaMomentania = new Planta(i, false,0);
+            plantaMomentania = new Planta(i, false, 0);
             Plantes.add(i, plantaMomentania);
         }
     }
@@ -135,27 +135,27 @@ public class Elevator implements EventsListener {
     void plantaPendent() {
 
         for (int j = 0; j < Plantes.size(); j++) {
-            if (Plantes.get(j).getDir()==69){ //Cridada desde panell
-            if (floor == Plantes.get(j).getNumPlanta() && Plantes.get(j).isPendent()) {
-                //Llevam pendent perque ja lhem visitada
-                Plantes.get(j).setPendent(false);
-                //Levar planta de arraylist
-                for (int i = 0; i < entrada.size(); i++) {
-                    if (entrada.get(i) == floor) {
-                        entrada.remove(i);
+            if (Plantes.get(j).getDir() == 69) { //Cridada desde panell
+                if (floor == Plantes.get(j).getNumPlanta() && Plantes.get(j).isPendent()) {
+                    //Llevam pendent perque ja lhem visitada
+                    Plantes.get(j).setPendent(false);
+                    //Levar planta de arraylist
+                    for (int i = 0; i < entrada.size(); i++) {
+                        if (entrada.get(i) == floor) {
+                            entrada.remove(i);
+                        }
                     }
+                    System.out.println("Obrint portes de la planta: " + Plantes.get(j).getNumPlanta());
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Tancant portes");
+                    mvcEvents.getView().notify("closeDoor");
                 }
-                System.out.println("Obrint portes de la planta: " + Plantes.get(j).getNumPlanta());
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("Tancant portes");
-                mvcEvents.getView().notify("closeDoor");
-            }
-        }else   {//Cridada per boto exterior
-                if (floor == Plantes.get(j).getNumPlanta() && Plantes.get(j).isPendent() && Plantes.get(j).getDir()== movement) {
+            } else {//Cridada per boto exterior
+                if (floor == Plantes.get(j).getNumPlanta() && Plantes.get(j).isPendent() && Plantes.get(j).getDir() == movement) {
                     //Llevam pendent perque ja lhem visitada
                     Plantes.get(j).setPendent(false);
                     //Levar planta de arraylist

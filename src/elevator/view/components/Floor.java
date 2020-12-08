@@ -3,8 +3,6 @@ package elevator.view.components;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 public class Floor extends JComponent {
 
@@ -17,19 +15,18 @@ public class Floor extends JComponent {
         this.liftWidth = liftWidth;
         this.floorNumber = floorNumber;
 
-        ImageIcon adalt = new ImageIcon(new ImageIcon("src\\elevator\\model\\images\\up.png").getImage().getScaledInstance(85, floorHeight/2, Image.SCALE_DEFAULT));
-        ImageIcon abaix = new ImageIcon(new ImageIcon("src\\elevator\\model\\images\\down.png").getImage().getScaledInstance(85, floorHeight/2, Image.SCALE_DEFAULT));
+        ImageIcon adalt = new ImageIcon(new ImageIcon("src\\elevator\\model\\images\\up.png").getImage().getScaledInstance(85, floorHeight / 2, Image.SCALE_DEFAULT));
+        ImageIcon abaix = new ImageIcon(new ImageIcon("src\\elevator\\model\\images\\down.png").getImage().getScaledInstance(85, floorHeight / 2, Image.SCALE_DEFAULT));
 
         JLabel floorNumberLabel = new JLabel("Floor: " + floorNumber);
-        add(floorNumberLabel).setBounds(5, 0, 180/2, floorHeight/2);
-
+        add(floorNumberLabel).setBounds(5, 0, 180 / 2, floorHeight / 2);
 
         JButton up = new JButton(adalt);
 
-        add(up).setBounds(310, 45, 180/2, floorHeight/4);
+        add(up).setBounds(310, 45, 180 / 2, floorHeight / 4);
 
         JButton down = new JButton(abaix);
-        add(down).setBounds(5, 45, 180/2, floorHeight/4);
+        add(down).setBounds(5, 45, 180 / 2, floorHeight / 4);
     }
 
     @Override
