@@ -17,9 +17,8 @@ public class Floor extends JComponent {
         this.liftWidth = liftWidth;
         this.floorNumber = floorNumber;
 
-        ImageIcon adalt = new ImageIcon(new ImageIcon("C:\\Users\\andre\\IdeaProjects\\ascensor\\src\\elevator\\view\\components\\up.png").getImage().getScaledInstance(85, floorHeight/2, Image.SCALE_DEFAULT));
-        ImageIcon abaix = new ImageIcon(new ImageIcon("C:\\Users\\andre\\IdeaProjects\\ascensor\\src\\elevator\\view\\components\\down.png").getImage().getScaledInstance(85, floorHeight/2, Image.SCALE_DEFAULT));
-
+        ImageIcon adalt = new ImageIcon(new ImageIcon("src\\elevator\\model\\images\\up.png").getImage().getScaledInstance(85, floorHeight/2, Image.SCALE_DEFAULT));
+        ImageIcon abaix = new ImageIcon(new ImageIcon("src\\elevator\\model\\images\\down.png").getImage().getScaledInstance(85, floorHeight/2, Image.SCALE_DEFAULT));
 
         JLabel floorNumberLabel = new JLabel("Floor: " + floorNumber);
         add(floorNumberLabel).setBounds(5, 0, 180/2, floorHeight/2);

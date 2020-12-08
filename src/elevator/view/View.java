@@ -120,7 +120,7 @@ public class View extends JFrame implements EventsListener {
 
     public void selectDestinationFloor() {
         JFrame floorSelector = new JFrame();
-        floorSelector.setUndecorated(true);
+        //floorSelector.setUndecorated(true);
         floorSelector.setVisible(true);
         setEnabled(false); //Desactivar frame principal
         floorSelector.setResizable(false);
