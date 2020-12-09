@@ -146,6 +146,7 @@ public class View extends JFrame implements EventsListener {
             downFloorButtons[Math.abs(i - numberOfFloors + 1)] = floorButton;
             floorButton.getButton().addActionListener(e -> {
                 changeButtonColor(floorButton.getButton(), new Color(255, 127, 127));
+                mvcEvents.getController().notify("floorButton, " + floorButton.getFloor());
             });
             leftButtons.add(floorButton.getButton());
         }
@@ -167,6 +168,7 @@ public class View extends JFrame implements EventsListener {
             upFloorButtons[Math.abs(i - numberOfFloors + 1)] = floorButton;
             floorButton.getButton().addActionListener(e -> {
                 changeButtonColor(floorButton.getButton(), new Color(255, 127, 127));
+                mvcEvents.getController().notify("floorButton, " + floorButton.getFloor());
             });
             leftButtons.add(floorButton.getButton());
         }

@@ -24,7 +24,8 @@ public class Controller implements EventsListener {
             elevator.start();
         } else if (message.startsWith("keypad")) {
             elevator.addPendingFloor(Integer.parseInt(message.split(", ")[1]));
+        } else if (message.startsWith("floorButton")) {
+            elevator.addPendingFloor(Integer.parseInt(message.split(", ")[1]));
         }
     }
-
 }
