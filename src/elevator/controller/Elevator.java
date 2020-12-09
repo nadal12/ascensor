@@ -1,6 +1,5 @@
 package elevator.controller;
 
-import elevator.EventsListener;
 import elevator.MVCEvents;
 import elevator.model.Planta;
 
