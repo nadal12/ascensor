@@ -189,6 +189,7 @@ public class View extends JFrame implements EventsListener {
 
         if (message.startsWith("openDoor")) {
             lift.openDoor();
+            System.out.println("Door status: " + lift.isDoorOpen());
         } else if (message.startsWith("closeDoor")) {
             lift.closeDoor();
         } else  if (message.startsWith("setFloor")) {

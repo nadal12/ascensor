@@ -30,12 +30,12 @@ public class Lift extends JPanel {
 
         if (doorOpen) {
             graphics.setColor(Color.DARK_GRAY);
-            graphics.fillRect(PADDING * 2, YPosition + PADDING, (floorWidth / 2) - SMALL_PADDING, floorHeight - PADDING * 2);
-            graphics.fillRect((floorWidth / 2) + PADDING * 2, YPosition + PADDING, (floorWidth / 2) - PADDING - SMALL_PADDING * 2, floorHeight - PADDING * 2);
-        } else {
-            graphics.setColor(Color.DARK_GRAY);
             graphics.fillRect(PADDING * 2, YPosition + PADDING, floorWidth / 10, floorHeight - PADDING * 2);
             graphics.fillRect(floorWidth - PADDING * 4, YPosition + PADDING, floorWidth / 10, floorHeight - PADDING * 2);
+        } else {
+            graphics.setColor(Color.DARK_GRAY);
+            graphics.fillRect(PADDING * 2, YPosition + PADDING, (floorWidth / 2) - SMALL_PADDING, floorHeight - PADDING * 2);
+            graphics.fillRect((floorWidth / 2) + PADDING * 2, YPosition + PADDING, (floorWidth / 2) - PADDING - SMALL_PADDING * 2, floorHeight - PADDING * 2);
         }
     }
 
@@ -79,6 +79,10 @@ public class Lift extends JPanel {
 
     public int getActualFloor() {
         return actualFloor;
+    }
+
+    public boolean isDoorOpen() {
+        return doorOpen;
     }
 
   /*  public void animate() {
