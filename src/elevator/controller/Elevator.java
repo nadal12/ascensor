@@ -53,7 +53,7 @@ public class Elevator implements EventsListener {
             System.out.println("Liberado");
             floorsSelected = false;
 
-            entrada = mvcEvents.getView().getSelectedFloors();
+            //entrada = mvcEvents.getView().getSelectedFloors();
 
             //Posar plantes a pendets de visitar
             for (int i = 0; i < entrada.size(); i++) {
@@ -75,7 +75,7 @@ public class Elevator implements EventsListener {
                 System.out.println("Obrint portes");
             } else {
                 moveElevator(destinationFloor, movement);
-                mvcEvents.getView().setFloor(destinationFloor);
+                //mvcEvents.getView().setFloor(destinationFloor);
             }
         }
     }
@@ -114,7 +114,7 @@ public class Elevator implements EventsListener {
         //comprovarDisPonibles(moveDirection);
         while (floor != destination) {
             floor += moveDirection;
-            mvcEvents.getView().setFloor(floor);
+            //mvcEvents.getView().setFloor(floor);
             plantaPendent();
             System.out.println(floor);
             try {

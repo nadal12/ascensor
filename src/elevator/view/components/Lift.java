@@ -5,40 +5,36 @@ import java.awt.*;
 
 public class Lift extends JPanel {
 
-    private int numberOfFloors, floorHeight;
-    private int positionY;
-    private int previousY;
+    private int numberOfFloors, floorHeight, floorWidth;
+    private static final int PADDING = 5;
+    private static final int SMALL_PADDING = 2;
     private int actualFloor = 0;
     private boolean doorOpen = true;
 
-    public Lift(int numberOfFloors, int floorHeight) {
+    public Lift(int numberOfFloors) {
         this.numberOfFloors = numberOfFloors;
-        this.floorHeight = floorHeight;
         this.setBackground(new Color(13, 101, 111));
-
-        setLayout(new FlowLayout());
     }
 
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         graphics.setColor(Color.pink);
+        floorHeight = getHeight() / numberOfFloors;
+        floorWidth = getWidth() - (PADDING*2);
+        int YPosition = getHeight() - (floorHeight * (actualFloor + 1));
 
-        if (positionY == 0) {
-            positionY = super.getHeight() - 12 - floorHeight;
-        }
-        positionY = super.getHeight() - 5 - ((actualFloor + 1) * (floorHeight + 5));
-        graphics.fillRect(210, positionY, 180, floorHeight);
-
-        JLabel doorLabel;
+        graphics.fillRect(PADDING, YPosition, floorWidth, floorHeight);
 
         if (doorOpen) {
-            doorLabel = new JLabel("Obert");
+            graphics.setColor(Color.DARK_GRAY);
+            graphics.fillRect(PADDING * 2, YPosition + PADDING, (floorWidth / 2) - SMALL_PADDING, floorHeight - PADDING * 2);
+            graphics.fillRect((floorWidth / 2) + PADDING * 2, YPosition + PADDING, (floorWidth / 2) - PADDING - SMALL_PADDING * 2, floorHeight - PADDING * 2);
         } else {
-            doorLabel = new JLabel("Tancat");
+            graphics.setColor(Color.DARK_GRAY);
+            graphics.fillRect(PADDING * 2, YPosition + PADDING, floorWidth / 10, floorHeight - PADDING * 2);
+            graphics.fillRect(floorWidth - PADDING * 4, YPosition + PADDING, floorWidth / 10, floorHeight - PADDING * 2);
         }
-
-        add(doorLabel).setBounds(290, positionY, 30, floorHeight);
     }
 
     public void goUp() {
@@ -80,7 +76,7 @@ public class Lift extends JPanel {
         return actualFloor;
     }
 
-    public void animate() {
+  /*  public void animate() {
         int target = super.getHeight() - 5 - ((actualFloor + 1) * (floorHeight + 5));
         // TODO Animació.
         while (previousY > target) {
@@ -92,7 +88,7 @@ public class Lift extends JPanel {
                 Thread.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
-    }
+    }*/
 }
