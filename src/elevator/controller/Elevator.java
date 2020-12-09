@@ -19,6 +19,10 @@ public class Elevator extends Thread {
         this.mvcEvents = mvcEvents;
     }
 
+    public void setDir(int floor, int dir) {
+        Plantes.get(floor).setDir(dir);
+    }
+
     public void run() {
         //floor = mvcEvents.getView().getActualFloor();
 
@@ -154,7 +158,7 @@ public class Elevator extends Thread {
     void plantaPendent() {
 
         for (Planta plante : Plantes) {
-            if (plante.getDir() == 69) { //Cridada desde panell
+            if (plante.getDir() == 0) { //Cridada desde panell
                 if (floor == plante.getNumPlanta() && plante.isPendent()) {
                     //Llevam pendent perque ja lhem visitada
                     plante.setPendent(false);
