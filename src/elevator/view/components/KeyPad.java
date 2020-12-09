@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class KeyPad extends JPanel {
 
     private JLabel display;
-    private JButton [] keyPadButtons = new JButton[10];
+    private JButton[] keyPadButtons = new JButton[10];
     private MVCEvents mvcEvents;
 
     public KeyPad(int numberOfFloors, MVCEvents mvcEvents) {

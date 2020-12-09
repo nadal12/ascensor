@@ -9,9 +9,6 @@ import elevator.view.components.Lift;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.security.Key;
 import java.util.ArrayList;
 
 public class View extends JFrame implements EventsListener {
