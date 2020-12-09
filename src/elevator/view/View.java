@@ -116,7 +116,6 @@ public class View extends JFrame implements EventsListener {
             });
             keypad.add(button);
         }
-
         add(keypad);
     }
 
