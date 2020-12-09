@@ -22,6 +22,8 @@ public class Controller implements EventsListener {
         if (message.startsWith("Start")) {
             elevator = new Elevator(mvcEvents);
             elevator.start();
+        } else if (message.startsWith("keypad")) {
+            elevator.addPendingFloor(Integer.parseInt(message.split(", ")[1]));
         }
     }
 

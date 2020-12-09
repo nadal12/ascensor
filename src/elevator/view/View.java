@@ -8,6 +8,8 @@ import elevator.view.components.Lift;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class View extends JFrame implements EventsListener {
@@ -18,15 +20,16 @@ public class View extends JFrame implements EventsListener {
     private static final int DEFAULT_WIDTH = 1200;
     private static final int DEFAULT_HEIGHT = 700;
 
-    private int numberOfFloors = 5;
+    private int numberOfFloors;
     private JPanel scene;
     private JPanel keypad;
+    private JLabel display;
+    private JButton [] keypadButtons = new JButton[10];
 
     // Scene attributes.
     private final static int MARGIN_BETWEEN_FLOORS = 5;
     private Lift lift;
     private ArrayList<Integer> selectedFloors = new ArrayList<>();
-
     private MVCEvents mvcEvents;
 
     /**
@@ -71,17 +74,15 @@ public class View extends JFrame implements EventsListener {
         String[] options = {"2", "3", "4", "5", "6", "7", "8", "9", "10"};
 
         // Cuadro de diálogo inicial.
-        String numberOfFloors = (String) JOptionPane.showInputDialog(null,
+        numberOfFloors = Integer.parseInt ((String) JOptionPane.showInputDialog(null,
                 "¿Cuantas plantas tiene el edificio?", "Selecciona el número de plantas",
                 JOptionPane.QUESTION_MESSAGE,
-                null, options, options[2]);
+                null, options, options[2]));
 
         // Si se aprieta el botón cancelar.
-        if (numberOfFloors == null) {
+        if (numberOfFloors == 0) {
             System.exit(0);
         }
-
-        this.numberOfFloors = Integer.parseInt(numberOfFloors);
     }
 
     private void configureKeyPad() {
@@ -90,20 +91,38 @@ public class View extends JFrame implements EventsListener {
         // Se pone numberOfFloors + 1 para que haya sitio para el display.
         keypad.setLayout(new GridLayout(numberOfFloors + 1, 1));
 
-        JLabel display = new JLabel("PLANTA 0");
+        display = new JLabel();
+        display.setForeground(Color.RED);
         display.setFont(new Font(display.getName(), Font.PLAIN, 50));
         display.setVerticalAlignment(SwingConstants.CENTER);
         display.setHorizontalAlignment(SwingConstants.CENTER);
 
+        display.setOpaque(true);
+        display.setBackground(new Color(252, 255, 157));
         keypad.add(display);
 
         for (int i = 0; i < numberOfFloors; i++) {
             JButton button = new JButton(String.valueOf(i));
             button.setFont(new Font(display.getName(), Font.BOLD, 50));
+
+            //TODO revisar
+            button.setBackground(null);
+
+            keypadButtons[i] = button;
+            button.addActionListener(e -> {
+                changeButtonColor(button, new Color(255, 127, 127));
+                mvcEvents.getController().notify("keypad, " + button.getText());
+            });
             keypad.add(button);
         }
 
         add(keypad);
+    }
+
+    private void changeButtonColor(JButton button, Color color) {
+        button.setBackground(color);
+        button.setContentAreaFilled(false);
+        button.setOpaque(true);
     }
 
     public void configureScene() {
@@ -158,10 +177,26 @@ public class View extends JFrame implements EventsListener {
         revalidate();
         repaint();
         mvcEvents.getController().notify("Start");
+        setDisplayText("Planta 0");
+    }
+
+    public void setDisplayText(String text) {
+        display.setText(text);
     }
 
     @Override
     public void notify(String message) {
+
+        if (message.startsWith("openDoor")) {
+            lift.openDoor();
+        } else if (message.startsWith("closeDoor")) {
+            lift.closeDoor();
+        } else  if (message.startsWith("setFloor")) {
+            lift.setFloor(Integer.parseInt(message.split(", ")[1]));
+            display.setText("Planta " + message.split(", ")[1]);
+        } else if (message.startsWith("resetButtonColor")) {
+            changeButtonColor(keypadButtons[Integer.parseInt(message.split(", ")[1])], null);
+        }
 
     }
 }

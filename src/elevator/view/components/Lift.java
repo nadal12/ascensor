@@ -1,5 +1,7 @@
 package elevator.view.components;
 
+import elevator.MVCEvents;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -42,6 +44,7 @@ public class Lift extends JPanel {
             //previousY = positionY;
             actualFloor++;
             repaint();
+
             //animate();
         }
     }
@@ -66,10 +69,12 @@ public class Lift extends JPanel {
 
     public void closeDoor() {
         doorOpen = false;
+        repaint();
     }
 
     public void openDoor() {
         doorOpen = true;
+        repaint();
     }
 
     public int getActualFloor() {

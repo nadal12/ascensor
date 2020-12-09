@@ -11,7 +11,7 @@ public class Elevator extends Thread implements EventsListener {
 
     private static final String DOWN = "cap avall";
     private static final String UP = "cap adalt";
-    private int floor;
+    private int floor = 0;
     private int movement;
     ArrayList<Integer> entrada = new ArrayList<>();
     ArrayList<Planta> Plantes = new ArrayList<>();
@@ -48,15 +48,12 @@ public class Elevator extends Thread implements EventsListener {
             //   entrada.add(Integer.parseInt(strs[i]));
             //}
 
-            mvcEvents.getView().notify("selectFloors");
-
-            while (!floorsSelected) {
+            while (entrada.isEmpty()) {
                 Thread.yield();
             }
-            System.out.println("Liberado");
-            floorsSelected = false;
 
-            //entrada = mvcEvents.getView().getSelectedFloors();
+            //Tancar portes
+            mvcEvents.getView().notify("closeDoor");
 
             //Posar plantes a pendets de visitar
             for (int i = 0; i < entrada.size(); i++) {
@@ -68,6 +65,7 @@ public class Elevator extends Thread implements EventsListener {
                     }
                 }
             }
+
             //Agafam desti es primer da sa llista d'entrades.
             int destinationFloor = entrada.get(0);
 
@@ -77,13 +75,18 @@ public class Elevator extends Thread implements EventsListener {
                 mvcEvents.getView().notify("openDoor");
                 System.out.println("Obrint portes");
             } else {
+                mvcEvents.getView().notify("closeDoor");
                 moveElevator(destinationFloor, movement);
-                //mvcEvents.getView().setFloor(destinationFloor);
             }
+
+            mvcEvents.getView().notify("resetButtonColor, " + entrada.get(0));
+
+            //Eliminar planta visitada.
+            entrada.remove(0);
         }
     }
 
-    void imprimirPendents() {
+  /*  void imprimirPendents() {
         for (int i = 0; i < Plantes.size(); i++) {
             System.out.println("elevator.model.Planta: " + Plantes.get(i).getNumPlanta() + " , pendent = " + Plantes.get(i).isPendent());
         }
@@ -96,7 +99,7 @@ public class Elevator extends Thread implements EventsListener {
             plantaMomentania = new Planta(i, false, 0);
             Plantes.add(i, plantaMomentania);
         }
-    }
+    }*/
 
     /* determine if movement needed is to up or to down */
     private int getMovementDirection(int destinationFloor) {
@@ -117,7 +120,7 @@ public class Elevator extends Thread implements EventsListener {
         //comprovarDisPonibles(moveDirection);
         while (floor != destination) {
             floor += moveDirection;
-            //mvcEvents.getView().setFloor(floor);
+            mvcEvents.getView().notify("setFloor, " + floor);
             plantaPendent();
             System.out.println(floor);
             try {
@@ -127,6 +130,14 @@ public class Elevator extends Thread implements EventsListener {
             }
         }
         System.out.println("Ascensor ha arribat");
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        mvcEvents.getView().notify("openDoor");
         System.out.println(entrada);
     }
 
@@ -142,13 +153,17 @@ public class Elevator extends Thread implements EventsListener {
                 if (floor == Plantes.get(j).getNumPlanta() && Plantes.get(j).isPendent()) {
                     //Llevam pendent perque ja lhem visitada
                     Plantes.get(j).setPendent(false);
+
                     //Levar planta de arraylist
                     for (int i = 0; i < entrada.size(); i++) {
                         if (entrada.get(i) == floor) {
                             entrada.remove(i);
                         }
                     }
+
                     System.out.println("Obrint portes de la planta: " + Plantes.get(j).getNumPlanta());
+                    mvcEvents.getView().notify("openDoor");
+
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
@@ -168,6 +183,8 @@ public class Elevator extends Thread implements EventsListener {
                         }
                     }
                     System.out.println("Obrint portes de la planta: " + Plantes.get(j).getNumPlanta());
+                    mvcEvents.getView().notify("openDoor");
+
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
@@ -180,7 +197,7 @@ public class Elevator extends Thread implements EventsListener {
         }
     }
 
-    private void comprovarDisPonibles(int moveDirection) {
+  /*  private void comprovarDisPonibles(int moveDirection) {
         if (moveDirection > 0) {
             for (int i = 0; i < entrada.size(); i++) {
                 if (floor < entrada.get(i)) {
@@ -195,6 +212,12 @@ public class Elevator extends Thread implements EventsListener {
                             + entrada.get(i));
                 }
             }
+        }
+    }*/
+
+    public void addPendingFloor(int floor) {
+        if (!entrada.contains(floor)) {
+            entrada.add(floor);
         }
     }
 
