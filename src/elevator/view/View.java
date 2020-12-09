@@ -42,7 +42,6 @@ public class View extends JFrame implements EventsListener {
      * @param title     titulo de la ventana
      * @param mvcEvents clase principal que gestiona el patrón MVC
      */
-
     public View(String title, MVCEvents mvcEvents) {
         super(title);
 
@@ -76,15 +75,17 @@ public class View extends JFrame implements EventsListener {
         String[] options = {"2", "3", "4", "5", "6", "7", "8", "9", "10"};
 
         // Cuadro de diálogo inicial.
-        numberOfFloors = Integer.parseInt((String) JOptionPane.showInputDialog(null,
+        String answer = (String) JOptionPane.showInputDialog(null,
                 "¿Cuantas plantas tiene el edificio?", "Selecciona el número de plantas",
                 JOptionPane.QUESTION_MESSAGE,
-                null, options, options[2]));
+                null, options, options[2]);
 
         // Si se aprieta el botón cancelar.
-        if (numberOfFloors == 0) {
+        if (answer == null) {
             System.exit(0);
         }
+
+        numberOfFloors = Integer.parseInt(answer);
     }
 
     private void configureKeyPad() {
