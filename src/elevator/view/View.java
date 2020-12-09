@@ -7,6 +7,8 @@ import elevator.view.components.Lift;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class View extends JFrame implements EventsListener {
@@ -22,6 +24,8 @@ public class View extends JFrame implements EventsListener {
     private JPanel keypad;
     private JLabel display;
     private JButton[] keypadButtons = new JButton[10];
+    private JButton[] upFloorButtons = new JButton[10];
+    private JButton[] downFloorButtons = new JButton[10];
 
     // Scene attributes.
     private final static int MARGIN_BETWEEN_FLOORS = 5;
@@ -126,19 +130,24 @@ public class View extends JFrame implements EventsListener {
         scene = new JPanel();
         scene.setLayout(new GridLayout(1, 3));
 
-        createLeftButtons();
+        createUpButtons();
         createLift();
-        createRightButtons();
+        createDownButtons();
 
         add(scene);
     }
 
-    private void createRightButtons() {
+    private void createDownButtons() {
         JPanel leftButtons = new JPanel();
         leftButtons.setLayout(new GridLayout(numberOfFloors, 1));
 
         for (int i = 0; i < numberOfFloors; i++) {
-            leftButtons.add(new JButton(new ImageIcon(new ImageIcon("src\\elevator\\model\\images\\down.png").getImage().getScaledInstance(85, 85, Image.SCALE_DEFAULT))));
+            JButton button = new JButton(new ImageIcon(new ImageIcon("src\\elevator\\model\\images\\down.png").getImage().getScaledInstance(85, 85, Image.SCALE_DEFAULT)));
+            downFloorButtons[Math.abs(i - numberOfFloors + 1)] = button;
+            button.addActionListener(e -> {
+                changeButtonColor(button, new Color(255, 127, 127));
+            });
+            leftButtons.add(button);
         }
 
         scene.add(leftButtons);
@@ -149,12 +158,17 @@ public class View extends JFrame implements EventsListener {
         scene.add(lift);
     }
 
-    private void createLeftButtons() {
+    private void createUpButtons() {
         JPanel leftButtons = new JPanel();
         leftButtons.setLayout(new GridLayout(numberOfFloors, 1));
 
         for (int i = 0; i < numberOfFloors; i++) {
-            leftButtons.add(new JButton(new ImageIcon(new ImageIcon("src\\elevator\\model\\images\\up.png").getImage().getScaledInstance(85, 85, Image.SCALE_DEFAULT))));
+            JButton button = new JButton(new ImageIcon(new ImageIcon("src\\elevator\\model\\images\\up.png").getImage().getScaledInstance(85, 85, Image.SCALE_DEFAULT)));
+            upFloorButtons[Math.abs(i - numberOfFloors + 1)] = button;
+            button.addActionListener(e -> {
+                changeButtonColor(button, new Color(255, 127, 127));
+            });
+            leftButtons.add(button);
         }
 
         scene.add(leftButtons);
@@ -194,6 +208,8 @@ public class View extends JFrame implements EventsListener {
             display.setText("Planta " + message.split(", ")[1]);
         } else if (message.startsWith("resetButtonColor")) {
             changeButtonColor(keypadButtons[Integer.parseInt(message.split(", ")[1])], null);
+            changeButtonColor(upFloorButtons[Integer.parseInt(message.split(", ")[1])], null);
+            changeButtonColor(downFloorButtons[Integer.parseInt(message.split(", ")[1])], null);
         } else if (message.startsWith("display")) {
             display.setText(message.split(", ")[1]);
         }
