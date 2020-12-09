@@ -4,7 +4,6 @@ import elevator.EventsListener;
 import elevator.MVCEvents;
 import elevator.model.Planta;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Elevator extends Thread implements EventsListener {
@@ -37,6 +36,14 @@ public class Elevator extends Thread implements EventsListener {
         while (true) {
             System.out.println("Ascensor a planta " + floor);
             System.out.print("Quina planta vols anar? ");
+
+            mvcEvents.getView().notify("openDoor");
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             //Llegim entrada
             //String lines = br.readLine();

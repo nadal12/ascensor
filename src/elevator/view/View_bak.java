@@ -133,7 +133,7 @@ public class View_bak extends JFrame implements EventsListener {
             drawPointer = drawPointer + floorHeight + MARGIN_BETWEEN_FLOORS;
         }
 
-       // lift = new Lift(numberOfFloors, floorHeight);
+        // lift = new Lift(numberOfFloors, floorHeight);
         scene.add(lift);
         add(scene, BorderLayout.WEST);
     }

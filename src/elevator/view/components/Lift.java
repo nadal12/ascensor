@@ -1,7 +1,5 @@
 package elevator.view.components;
 
-import elevator.MVCEvents;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -23,7 +21,7 @@ public class Lift extends JPanel {
         super.paintComponent(graphics);
         graphics.setColor(Color.pink);
         floorHeight = getHeight() / numberOfFloors;
-        floorWidth = getWidth() - (PADDING*2);
+        floorWidth = getWidth() - (PADDING * 2);
         int YPosition = getHeight() - (floorHeight * (actualFloor + 1));
 
         graphics.fillRect(PADDING, YPosition, floorWidth, floorHeight);

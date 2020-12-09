@@ -3,13 +3,10 @@ package elevator.view;
 import elevator.ErrorLog;
 import elevator.EventsListener;
 import elevator.MVCEvents;
-import elevator.view.components.Floor;
 import elevator.view.components.Lift;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class View extends JFrame implements EventsListener {
@@ -24,7 +21,7 @@ public class View extends JFrame implements EventsListener {
     private JPanel scene;
     private JPanel keypad;
     private JLabel display;
-    private JButton [] keypadButtons = new JButton[10];
+    private JButton[] keypadButtons = new JButton[10];
 
     // Scene attributes.
     private final static int MARGIN_BETWEEN_FLOORS = 5;
@@ -63,7 +60,7 @@ public class View extends JFrame implements EventsListener {
      * Configurar la interfaz gráfica de usuario con Java Swing
      */
     private void configureUI() {
-        setLayout(new GridLayout(1,2));
+        setLayout(new GridLayout(1, 2));
         setNumberOfFloors();
         configureScene();
         configureKeyPad();
@@ -74,7 +71,7 @@ public class View extends JFrame implements EventsListener {
         String[] options = {"2", "3", "4", "5", "6", "7", "8", "9", "10"};
 
         // Cuadro de diálogo inicial.
-        numberOfFloors = Integer.parseInt ((String) JOptionPane.showInputDialog(null,
+        numberOfFloors = Integer.parseInt((String) JOptionPane.showInputDialog(null,
                 "¿Cuantas plantas tiene el edificio?", "Selecciona el número de plantas",
                 JOptionPane.QUESTION_MESSAGE,
                 null, options, options[2]));
@@ -192,12 +189,13 @@ public class View extends JFrame implements EventsListener {
             System.out.println("Door status: " + lift.isDoorOpen());
         } else if (message.startsWith("closeDoor")) {
             lift.closeDoor();
-        } else  if (message.startsWith("setFloor")) {
+        } else if (message.startsWith("setFloor")) {
             lift.setFloor(Integer.parseInt(message.split(", ")[1]));
             display.setText("Planta " + message.split(", ")[1]);
         } else if (message.startsWith("resetButtonColor")) {
             changeButtonColor(keypadButtons[Integer.parseInt(message.split(", ")[1])], null);
+        } else if (message.startsWith("display")) {
+            display.setText(message.split(", ")[1]);
         }
-
     }
 }
