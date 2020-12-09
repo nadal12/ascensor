@@ -14,10 +14,10 @@ public class MVCEvents {
      * Construcció de l'esquema MVC
      */
     private void init() {
+        model = new Model(this);
+        controller = new Controller(this);
         view = new View("Elevator - Sistemes Intel·ligents", this);
         view.start();
-        controller = new Controller(this);
-        model = new Model(this);
     }
 
     public static void main(String[] args) {

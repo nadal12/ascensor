@@ -7,19 +7,22 @@ import elevator.model.Planta;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Elevator implements EventsListener {
+public class Elevator extends Thread implements EventsListener {
+
     private static final String DOWN = "cap avall";
     private static final String UP = "cap adalt";
     private int floor;
     private int movement;
     ArrayList<Integer> entrada = new ArrayList<>();
-    //De objecte planta
     ArrayList<Planta> Plantes = new ArrayList<>();
     MVCEvents mvcEvents;
     private boolean floorsSelected = false;
 
-    public void simulateElevator(MVCEvents mvcEvents) throws IOException {
+    public Elevator(MVCEvents mvcEvents) {
         this.mvcEvents = mvcEvents;
+    }
+
+    public void run() {
         //floor = mvcEvents.getView().getActualFloor();
 
         //Iniciar arraylist amb plantes

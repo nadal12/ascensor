@@ -86,10 +86,20 @@ public class View extends JFrame implements EventsListener {
 
     private void configureKeyPad() {
         keypad = new JPanel();
-        keypad.setLayout(new GridLayout(numberOfFloors, 1));
+
+        // Se pone numberOfFloors + 1 para que haya sitio para el display.
+        keypad.setLayout(new GridLayout(numberOfFloors + 1, 1));
+
+        JLabel display = new JLabel("PLANTA 0");
+        display.setFont(new Font(display.getName(), Font.PLAIN, 50));
+        display.setVerticalAlignment(SwingConstants.CENTER);
+        display.setHorizontalAlignment(SwingConstants.CENTER);
+
+        keypad.add(display);
 
         for (int i = 0; i < numberOfFloors; i++) {
-            JButton button = new JButton(String.valueOf(i + 1));
+            JButton button = new JButton(String.valueOf(i));
+            button.setFont(new Font(display.getName(), Font.BOLD, 50));
             keypad.add(button);
         }
 
@@ -99,17 +109,6 @@ public class View extends JFrame implements EventsListener {
     public void configureScene() {
         scene = new JPanel();
         scene.setLayout(new GridLayout(1, 3));
-
-        // Cálculos.
-        int floorHeight = (DEFAULT_HEIGHT - 50 - (MARGIN_BETWEEN_FLOORS * numberOfFloors)) / numberOfFloors;
-
-        int drawPointer = MARGIN_BETWEEN_FLOORS;
-
-       /* for (int i = 0; i < numberOfFloors; i++) {
-            Floor floor = new Floor(floorHeight, 300, Math.abs(i - numberOfFloors + 1));
-            add(floor).setBounds(100, drawPointer, DEFAULT_WIDTH, floorHeight);
-            drawPointer = drawPointer + floorHeight + MARGIN_BETWEEN_FLOORS;
-        }*/
 
         createLeftButtons();
         createLift();
@@ -158,6 +157,7 @@ public class View extends JFrame implements EventsListener {
         setVisible(true);
         revalidate();
         repaint();
+        mvcEvents.getController().notify("Start");
     }
 
     @Override
