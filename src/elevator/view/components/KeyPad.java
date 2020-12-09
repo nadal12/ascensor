@@ -4,17 +4,13 @@ import elevator.MVCEvents;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class KeyPad extends JPanel {
 
-    private JLabel display;
-    private JButton[] keyPadButtons = new JButton[10];
-    private MVCEvents mvcEvents;
+    private final JLabel display;
+    private final JButton[] keyPadButtons = new JButton[10];
 
     public KeyPad(int numberOfFloors, MVCEvents mvcEvents) {
-        this.mvcEvents = mvcEvents;
 
         // Se pone numberOfFloors + 1 para que haya sitio para el display.
         setLayout(new GridLayout(numberOfFloors + 1, 1));
@@ -38,12 +34,9 @@ public class KeyPad extends JPanel {
 
             keyPadButtons[i] = button;
 
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    changeButtonColor(button, new Color(255, 127, 127));
-                    mvcEvents.getController().notify("keypad, " + button.getText());
-                }
+            button.addActionListener(e -> {
+                changeButtonColor(button, new Color(255, 127, 127));
+                mvcEvents.getController().notify("keypad, " + button.getText());
             });
 
             add(button);

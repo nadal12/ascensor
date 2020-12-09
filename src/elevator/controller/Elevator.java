@@ -6,7 +6,7 @@ import elevator.model.Planta;
 
 import java.util.ArrayList;
 
-public class Elevator extends Thread implements EventsListener {
+public class Elevator extends Thread {
 
     private static final String DOWN = "cap avall";
     private static final String UP = "cap adalt";
@@ -15,7 +15,6 @@ public class Elevator extends Thread implements EventsListener {
     ArrayList<Integer> entrada = new ArrayList<>();
     ArrayList<Planta> Plantes = new ArrayList<>();
     MVCEvents mvcEvents;
-    private boolean floorsSelected = false;
 
     public Elevator(MVCEvents mvcEvents) {
         this.mvcEvents = mvcEvents;
@@ -155,11 +154,11 @@ public class Elevator extends Thread implements EventsListener {
      * */
     void plantaPendent() {
 
-        for (int j = 0; j < Plantes.size(); j++) {
-            if (Plantes.get(j).getDir() == 69) { //Cridada desde panell
-                if (floor == Plantes.get(j).getNumPlanta() && Plantes.get(j).isPendent()) {
+        for (Planta plante : Plantes) {
+            if (plante.getDir() == 69) { //Cridada desde panell
+                if (floor == plante.getNumPlanta() && plante.isPendent()) {
                     //Llevam pendent perque ja lhem visitada
-                    Plantes.get(j).setPendent(false);
+                    plante.setPendent(false);
 
                     //Levar planta de arraylist
                     for (int i = 0; i < entrada.size(); i++) {
@@ -168,7 +167,7 @@ public class Elevator extends Thread implements EventsListener {
                         }
                     }
 
-                    System.out.println("Obrint portes de la planta: " + Plantes.get(j).getNumPlanta());
+                    System.out.println("Obrint portes de la planta: " + plante.getNumPlanta());
                     mvcEvents.getView().notify("openDoor");
 
                     try {
@@ -180,16 +179,16 @@ public class Elevator extends Thread implements EventsListener {
                     mvcEvents.getView().notify("closeDoor");
                 }
             } else {//Cridada per boto exterior
-                if (floor == Plantes.get(j).getNumPlanta() && Plantes.get(j).isPendent() && Plantes.get(j).getDir() == movement) {
+                if (floor == plante.getNumPlanta() && plante.isPendent() && plante.getDir() == movement) {
                     //Llevam pendent perque ja lhem visitada
-                    Plantes.get(j).setPendent(false);
+                    plante.setPendent(false);
                     //Levar planta de arraylist
                     for (int i = 0; i < entrada.size(); i++) {
                         if (entrada.get(i) == floor) {
                             entrada.remove(i);
                         }
                     }
-                    System.out.println("Obrint portes de la planta: " + Plantes.get(j).getNumPlanta());
+                    System.out.println("Obrint portes de la planta: " + plante.getNumPlanta());
                     mvcEvents.getView().notify("openDoor");
 
                     try {
@@ -225,13 +224,6 @@ public class Elevator extends Thread implements EventsListener {
     public void addPendingFloor(int floor) {
         if (!entrada.contains(floor)) {
             entrada.add(floor);
-        }
-    }
-
-    @Override
-    public void notify(String message) {
-        if (message.startsWith("floorsSelected")) {
-            floorsSelected = true;
         }
     }
 }

@@ -8,7 +8,7 @@ import elevator.MVCEvents;
  */
 public class Controller implements EventsListener {
 
-    private MVCEvents mvcEvents;
+    private final MVCEvents mvcEvents;
     private Elevator elevator;
 
     public Controller(MVCEvents mvcEvents) {

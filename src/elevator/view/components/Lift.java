@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Lift extends JPanel {
 
-    private int numberOfFloors, floorHeight, floorWidth;
+    private final int numberOfFloors;
     private static final int PADDING = 5;
     private static final int SMALL_PADDING = 2;
     private int actualFloor = 0;
@@ -20,8 +20,8 @@ public class Lift extends JPanel {
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         graphics.setColor(Color.pink);
-        floorHeight = getHeight() / numberOfFloors;
-        floorWidth = getWidth() - (PADDING * 2);
+        int floorHeight = getHeight() / numberOfFloors;
+        int floorWidth = getWidth() - (PADDING * 2);
         int YPosition = getHeight() - (floorHeight * (actualFloor + 1));
 
         graphics.fillRect(PADDING, YPosition, floorWidth, floorHeight);

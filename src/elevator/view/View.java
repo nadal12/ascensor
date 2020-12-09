@@ -9,7 +9,6 @@ import elevator.view.components.Lift;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class View extends JFrame implements EventsListener {
 
@@ -22,15 +21,13 @@ public class View extends JFrame implements EventsListener {
     private int numberOfFloors;
     private JPanel scene;
     private KeyPad keypad;
-    private JButton[] keypadButtons = new JButton[10];
-    private FloorButton[] upFloorButtons = new FloorButton[10];
-    private FloorButton[] downFloorButtons = new FloorButton[10];
+    private final FloorButton[] upFloorButtons = new FloorButton[10];
+    private final FloorButton[] downFloorButtons = new FloorButton[10];
 
     // Scene attributes.
-    private final static int MARGIN_BETWEEN_FLOORS = 5;
     private Lift lift;
-    private ArrayList<Integer> selectedFloors = new ArrayList<>();
-    private MVCEvents mvcEvents;
+
+    private final MVCEvents mvcEvents;
 
     /**
      * Constructor de la vista.

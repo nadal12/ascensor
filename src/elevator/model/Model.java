@@ -8,10 +8,7 @@ import elevator.MVCEvents;
  */
 public class Model implements EventsListener {
 
-    private MVCEvents mvcEvents;
-
     public Model(MVCEvents mvcEvents) {
-        this.mvcEvents = mvcEvents;
     }
 
     @Override

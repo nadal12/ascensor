@@ -4,14 +4,12 @@ public class Planta {
 
 
     private boolean pendent;
-    private int numPlanta;
-    private boolean ascensorAturat;
+    private final int numPlanta;
     private int dir = 0;
 
     public Planta(int numPlanta, boolean ascensorAturat, int dir) {
 
         this.numPlanta = numPlanta;
-        this.ascensorAturat = ascensorAturat;
         this.dir = dir;
     }
 
@@ -25,8 +23,6 @@ public class Planta {
 
     void obri_portes() throws InterruptedException {
         Thread.sleep(500);
-        this.ascensorAturat = true;
-
     }
 
     public boolean isPendent() {
