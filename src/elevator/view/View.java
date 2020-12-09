@@ -4,12 +4,14 @@ import elevator.ErrorLog;
 import elevator.EventsListener;
 import elevator.MVCEvents;
 import elevator.view.components.FloorButton;
+import elevator.view.components.KeyPad;
 import elevator.view.components.Lift;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.Key;
 import java.util.ArrayList;
 
 public class View extends JFrame implements EventsListener {
@@ -22,8 +24,7 @@ public class View extends JFrame implements EventsListener {
 
     private int numberOfFloors;
     private JPanel scene;
-    private JPanel keypad;
-    private JLabel display;
+    private KeyPad keypad;
     private JButton[] keypadButtons = new JButton[10];
     private FloorButton[] upFloorButtons = new FloorButton[10];
     private FloorButton[] downFloorButtons = new FloorButton[10];
@@ -89,35 +90,7 @@ public class View extends JFrame implements EventsListener {
     }
 
     private void configureKeyPad() {
-        keypad = new JPanel();
-
-        // Se pone numberOfFloors + 1 para que haya sitio para el display.
-        keypad.setLayout(new GridLayout(numberOfFloors + 1, 1));
-
-        display = new JLabel();
-        display.setForeground(Color.RED);
-        display.setFont(new Font(display.getName(), Font.PLAIN, 50));
-        display.setVerticalAlignment(SwingConstants.CENTER);
-        display.setHorizontalAlignment(SwingConstants.CENTER);
-
-        display.setOpaque(true);
-        display.setBackground(new Color(252, 255, 157));
-        keypad.add(display);
-
-        for (int i = 0; i < numberOfFloors; i++) {
-            JButton button = new JButton(String.valueOf(i));
-            button.setFont(new Font(display.getName(), Font.BOLD, 50));
-
-            //TODO revisar
-            button.setBackground(null);
-
-            keypadButtons[i] = button;
-            button.addActionListener(e -> {
-                changeButtonColor(button, new Color(255, 127, 127));
-                mvcEvents.getController().notify("keypad, " + button.getText());
-            });
-            keypad.add(button);
-        }
+        keypad = new KeyPad(numberOfFloors, mvcEvents);
         add(keypad);
     }
 
@@ -195,7 +168,7 @@ public class View extends JFrame implements EventsListener {
     }
 
     public void setDisplayText(String text) {
-        display.setText(text);
+        keypad.setText(text);
     }
 
     @Override
@@ -208,13 +181,13 @@ public class View extends JFrame implements EventsListener {
             lift.closeDoor();
         } else if (message.startsWith("setFloor")) {
             lift.setFloor(Integer.parseInt(message.split(", ")[1]));
-            display.setText("Planta " + message.split(", ")[1]);
+            keypad.setText("Planta " + message.split(", ")[1]);
         } else if (message.startsWith("resetButtonColor")) {
-            changeButtonColor(keypadButtons[Integer.parseInt(message.split(", ")[1])], null);
+            keypad.changeButtonColor(keypad.getKeyPadButtons()[Integer.parseInt(message.split(", ")[1])], null);
             changeButtonColor(upFloorButtons[Integer.parseInt(message.split(", ")[1])].getButton(), null);
             changeButtonColor(downFloorButtons[Integer.parseInt(message.split(", ")[1])].getButton(), null);
         } else if (message.startsWith("display")) {
-            display.setText(message.split(", ")[1]);
+            keypad.setText(message.split(", ")[1]);
         }
     }
 }
