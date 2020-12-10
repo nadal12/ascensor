@@ -4,6 +4,7 @@ import elevator.MVCEvents;
 import elevator.model.Planta;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Elevator extends Thread {
 
@@ -21,6 +22,13 @@ public class Elevator extends Thread {
 
     public void setDir(int floor, int dir) {
         Plantes.get(floor).setDir(dir);
+    }
+    public void iniciarPlantes(int numPlantes) {
+        Planta plantaMomentania;
+        for (int i = 0; i < numPlantes + 1; i++) {
+            plantaMomentania = new Planta(i, false, 0);
+            Plantes.add(i, plantaMomentania);
+        }
     }
 
     public void run() {
@@ -101,14 +109,8 @@ public class Elevator extends Thread {
         }
 
     }
+*/
 
-    void iniciarPlantes(int numPlantes) {
-        Planta plantaMomentania;
-        for (int i = 0; i < numPlantes + 1; i++) {
-            plantaMomentania = new Planta(i, false, 0);
-            Plantes.add(i, plantaMomentania);
-        }
-    }*/
 
     /* determine if movement needed is to up or to down */
     private int getMovementDirection(int destinationFloor) {
@@ -130,10 +132,15 @@ public class Elevator extends Thread {
         while (floor != destination) {
             floor += moveDirection;
             mvcEvents.getView().notify("setFloor, " + floor);
+            System.out.println("Entrada: "+entrada);
+
+
+            System.out.println("Pre planta pendent");
             plantaPendent();
-            System.out.println(floor);
+            System.out.println("Post planta pendent");
+            System.out.println("Planta: "+floor);
             try {
-                Thread.sleep(500);
+                Thread.sleep(2500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -141,7 +148,7 @@ public class Elevator extends Thread {
         System.out.println("Ascensor ha arribat");
 
         try {
-            Thread.sleep(500);
+            Thread.sleep(2500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -156,9 +163,15 @@ public class Elevator extends Thread {
      * FALTA PER COMPROVAR si es boto es per pujar o baixar. Se pot emplear sa variable movement
      * */
     void plantaPendent() {
-
+        System.out.println(
+                "Entrada dins plantapendent; "
+        );
+        System.out.println(entrada);
+        System.out.println(Plantes);
         for (Planta plante : Plantes) {
+            System.out.println(plante.getDir());
             if (plante.getDir() == 0) { //Cridada desde panell
+                System.out.println("Cridada boto");
                 if (floor == plante.getNumPlanta() && plante.isPendent()) {
                     //Llevam pendent perque ja lhem visitada
                     plante.setPendent(false);
@@ -183,6 +196,8 @@ public class Elevator extends Thread {
                 }
             } else {//Cridada per boto exterior
                 if (floor == plante.getNumPlanta() && plante.isPendent() && plante.getDir() == movement) {
+                    System.out.println("Cridada panell");
+
                     //Llevam pendent perque ja lhem visitada
                     plante.setPendent(false);
                     //Levar planta de arraylist

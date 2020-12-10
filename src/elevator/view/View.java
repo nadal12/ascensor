@@ -3,6 +3,7 @@ package elevator.view;
 import elevator.ErrorLog;
 import elevator.EventsListener;
 import elevator.MVCEvents;
+import elevator.controller.Elevator;
 import elevator.view.components.FloorButton;
 import elevator.view.components.KeyPad;
 import elevator.view.components.Lift;
@@ -81,6 +82,7 @@ public class View extends JFrame implements EventsListener {
         }
 
         numberOfFloors = Integer.parseInt(answer);
+        Elevator.iniciarPlantes(numberOfFloors);
     }
 
     private void configureKeyPad() {
