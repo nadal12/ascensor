@@ -82,7 +82,6 @@ public class View extends JFrame implements EventsListener {
         }
 
         numberOfFloors = Integer.parseInt(answer);
-        Elevator.iniciarPlantes(numberOfFloors);
     }
 
     private void configureKeyPad() {
@@ -160,6 +159,7 @@ public class View extends JFrame implements EventsListener {
         revalidate();
         repaint();
         mvcEvents.getController().notify("Start");
+        mvcEvents.getController().notify("iniciarPlantes, " + numberOfFloors);
         setDisplayText("Planta 0");
     }
 

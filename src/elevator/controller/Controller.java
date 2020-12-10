@@ -27,6 +27,8 @@ public class Controller implements EventsListener {
         } else if (message.startsWith("floorButton")) {
             //elevator.setDir(Integer.parseInt(message.split(", ")[1]), Integer.parseInt(message.split(", ")[2]));
             elevator.addPendingFloor(Integer.parseInt(message.split(", ")[1]));
+        } else if (message.startsWith("iniciarPlantes")) {
+            elevator.iniciarPlantes(Integer.parseInt(message.split(", ")[1]));
         }
     }
 }

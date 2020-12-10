@@ -23,6 +23,7 @@ public class Elevator extends Thread {
     public void setDir(int floor, int dir) {
         Plantes.get(floor).setDir(dir);
     }
+
     public void iniciarPlantes(int numPlantes) {
         Planta plantaMomentania;
         for (int i = 0; i < numPlantes + 1; i++) {
@@ -47,7 +48,9 @@ public class Elevator extends Thread {
             System.out.println("Ascensor a planta " + floor);
             System.out.print("Quina planta vols anar? ");
 
-            mvcEvents.getView().notify("openDoor");
+            if (mvcEvents.getView() != null) {
+                mvcEvents.getView().notify("openDoor");
+            }
 
             try {
                 Thread.sleep(500);
@@ -140,7 +143,7 @@ public class Elevator extends Thread {
             System.out.println("Post planta pendent");
             System.out.println("Planta: "+floor);
             try {
-                Thread.sleep(2500);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -148,7 +151,7 @@ public class Elevator extends Thread {
         System.out.println("Ascensor ha arribat");
 
         try {
-            Thread.sleep(2500);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
