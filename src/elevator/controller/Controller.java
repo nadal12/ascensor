@@ -23,12 +23,11 @@ public class Controller implements EventsListener {
             elevator = new Elevator(mvcEvents);
             elevator.start();
         } else if (message.startsWith("keypad")) {
-            elevator.addPendingFloor(Integer.parseInt(message.split(", ")[1]));
+            elevator.addPendingFloor(Integer.parseInt(message.split(", ")[1]), Elevator.DIRECTION_NONE);
         } else if (message.startsWith("floorButton")) {
-            //elevator.setDir(Integer.parseInt(message.split(", ")[1]), Integer.parseInt(message.split(", ")[2]));
-            elevator.addPendingFloor(Integer.parseInt(message.split(", ")[1]));
+            elevator.addPendingFloor(Integer.parseInt(message.split(", ")[1]), Integer.parseInt(message.split(", ")[2]));
         } else if (message.startsWith("iniciarPlantes")) {
-            elevator.iniciarPlantes(Integer.parseInt(message.split(", ")[1]));
+           // elevator.iniciarPlantes(Integer.parseInt(message.split(", ")[1]));
         }
     }
 }
