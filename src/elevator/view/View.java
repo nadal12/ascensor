@@ -1,5 +1,6 @@
 package elevator.view;
 
+import com.bulenkov.darcula.DarculaLaf;
 import elevator.ErrorLog;
 import elevator.EventsListener;
 import elevator.MVCEvents;
@@ -46,7 +47,7 @@ public class View extends JFrame implements EventsListener {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
             //Dark GUI - Darcula by Konstantin Bulenkov -  https://github.com/bulenkov/Darcula
-            // UIManager.setLookAndFeel(new DarculaLaf());
+            //UIManager.setLookAndFeel(new DarculaLaf());
         } catch (Exception e) {
             ErrorLog.logException(e);
         }
