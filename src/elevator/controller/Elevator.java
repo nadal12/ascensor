@@ -1,6 +1,6 @@
 package elevator.controller;
 import elevator.MVCEvents;
-import elevator.model.PendingFloor;
+import elevator.model.Floor;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ public class Elevator extends Thread {
     public static final int WAITING = 1500;
 
     private MVCEvents mvcEvents;
-    private ArrayList<PendingFloor> pendingFloors = new ArrayList<>();
+    private ArrayList<Floor> floors = new ArrayList<>();
     private int actualFloor = 0;
 
     public Elevator(MVCEvents mvcEvents) {
@@ -24,52 +24,36 @@ public class Elevator extends Thread {
         while (true) {
 
             //Esperar a que els usuaris pitjin botons.
-            while (pendingFloors.isEmpty()) {
+            while (floors.isEmpty()) {
                 Thread.yield();
-            }
-
-            for (int i = 0; i < pendingFloors.size(); i++) {
-
-                //Calcular direcció de l'ascensor.
-                int direction = (pendingFloors.get(i).getFloor() - actualFloor < 0) ? DIRECTION_DOWN:DIRECTION_UP;
-
-                if (direction == DIRECTION_UP) {
-                    for (int j = 0; j < pendingFloors.size(); j++) {
-                        PendingFloor pendingFloor = getNextFloor(DIRECTION_UP);
-
-                        for (int k = actualFloor; k <= pendingFloor.getFloor(); k++) {
-                            espera(WAITING);
-                            actualFloor = k;
-                            mvcEvents.getView().notify("setFloor, " + actualFloor);
-                        }
-
-                        mvcEvents.getView().notify("openDoor");
-                        pendingFloors.remove(pendingFloor);
-                        espera(WAITING);
-                    }
-                } else {
-
-                }
             }
 
             //Tancar portes.
             mvcEvents.getView().notify("closeDoor");
 
-
+            for (int i = 0; i < floors.size(); i++) {
+                for (int j = actualFloor; j <= floors.get(i).getFloor(); j++) {
+                    actualFloor = j;
+                    mvcEvents.getView().notify("setFloor, " + j);
+                    espera(1000);
+                }
+                floors.remove(floors.get(i));
+                mvcEvents.getView().notify("openDoor");
+            }
         }
     }
 
-    private PendingFloor getNextFloor(int directionUp) {
+    private Floor getNextFloor(int directionUp) {
         if (directionUp == DIRECTION_UP) {
-            for (int i = 0; i < pendingFloors.size(); i++) {
-                if (pendingFloors.get(i).getDirection() >= 0) {
-                    return pendingFloors.get(i);
+            for (int i = 0; i < floors.size(); i++) {
+                if (floors.get(i).getDirection() >= 0) {
+                    return floors.get(i);
                 }
             }
         } else {
-            for (int i = 0; i < pendingFloors.size(); i++) {
-                if (pendingFloors.get(i).getDirection() < 0) {
-                    return pendingFloors.get(i);
+            for (int i = 0; i < floors.size(); i++) {
+                if (floors.get(i).getDirection() < 0) {
+                    return floors.get(i);
                 }
             }
         }
@@ -85,7 +69,7 @@ public class Elevator extends Thread {
     }
 
     public void addPendingFloor(int floor, int direction) {
-        pendingFloors.add(new PendingFloor(floor, direction));
-        System.out.println(pendingFloors);
+        floors.add(new Floor(floor, direction));
+        System.out.println(floors);
     }
 }

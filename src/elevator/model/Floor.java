@@ -1,11 +1,11 @@
 package elevator.model;
 
-public class PendingFloor {
+public class Floor {
 
     private final int floor;
     private int direction;
 
-    public PendingFloor(int floor, int direction) {
+    public Floor(int floor, int direction) {
         this.floor = floor;
         this.direction = direction;
     }
