@@ -1,6 +1,5 @@
 package elevator.view;
 
-import com.bulenkov.darcula.DarculaLaf;
 import elevator.ErrorLog;
 import elevator.EventsListener;
 import elevator.MVCEvents;
