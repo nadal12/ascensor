@@ -9,7 +9,7 @@ public class Lift extends JPanel {
     private static final int PADDING = 5;
     private static final int SMALL_PADDING = 2;
     private int actualFloor = 0;
-    private boolean doorOpen = true;
+    private boolean doorOpen = false;
 
     public Lift(int numberOfFloors) {
         this.numberOfFloors = numberOfFloors;

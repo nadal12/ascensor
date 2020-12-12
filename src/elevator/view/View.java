@@ -157,7 +157,7 @@ public class View extends JFrame implements EventsListener {
         setVisible(true);
         revalidate();
         repaint();
-        mvcEvents.getController().notify("Start");
+        mvcEvents.getController().notify("Start, " + numberOfFloors);
         setDisplayText("Planta 0");
     }
 

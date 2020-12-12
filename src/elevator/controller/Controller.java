@@ -20,14 +20,12 @@ public class Controller implements EventsListener {
         System.out.println("Mensaje en Control: " + message);
 
         if (message.startsWith("Start")) {
-            elevator = new Elevator(mvcEvents);
+            elevator = new Elevator(Integer.parseInt(message.split(", ")[1]), mvcEvents);
             elevator.start();
         } else if (message.startsWith("keypad")) {
-            elevator.addPendingFloor(Integer.parseInt(message.split(", ")[1]), Elevator.DIRECTION_NONE);
+            elevator.selectFloor(Integer.parseInt(message.split(", ")[1]), Elevator.DIRECTION_NONE);
         } else if (message.startsWith("floorButton")) {
-            elevator.addPendingFloor(Integer.parseInt(message.split(", ")[1]), Integer.parseInt(message.split(", ")[2]));
-        } else if (message.startsWith("iniciarPlantes")) {
-           // elevator.iniciarPlantes(Integer.parseInt(message.split(", ")[1]));
+            elevator.selectFloor(Integer.parseInt(message.split(", ")[1]), Integer.parseInt(message.split(", ")[2]));
         }
     }
 }
