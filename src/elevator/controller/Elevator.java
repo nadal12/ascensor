@@ -9,14 +9,14 @@ public class Elevator extends Thread {
     public static final int DIRECTION_NONE = 0;
     public static final int DIRECTION_UP = 1;
     public static final int DIRECTION_DOWN = -1;
-    private static final int TIME_BETWEEN_FLOORS = 1500;
+    private static final int TIME_BETWEEN_FLOORS = 1000;
     private static final int DOOR_TIME = 1200;
 
-    private ArrayList<Floor> floors;
+    private final ArrayList<Floor> floors;
     private Floor actualFloor;
-    private int numberOfFoors;
+    private final int numberOfFoors;
 
-    private MVCEvents mvcEvents;
+    private final MVCEvents mvcEvents;
 
     public Elevator(int numberOfFloors, MVCEvents mvcEvents) {
         this.mvcEvents = mvcEvents;
@@ -46,21 +46,23 @@ public class Elevator extends Thread {
 
                         for (int i = actualFloor.getFloorNumber(); i < floors.size() && selectedFloorsAbove(); i++) {
                             setFloor(floors.get(i));
-
                             if ((actualFloor.isSelected()) && (actualFloor.getDirection() == DIRECTION_NONE || actualFloor.getDirection() == DIRECTION_UP)) {
                                 visitFloor();
                             }
-
                         }
 
                         break;
                     case DIRECTION_DOWN:
 
-                        break;
-                    case DIRECTION_NONE:
-
-
+                        for (int i = actualFloor.getFloorNumber(); i >= 0 && selectedFloorsBelow(); i--) {
+                            setFloor(floors.get(i));
+                            if ((actualFloor.isSelected()) && (actualFloor.getDirection() == DIRECTION_NONE || actualFloor.getDirection() == DIRECTION_DOWN)) {
+                                visitFloor();
+                            }
+                        }
                 }
+            } else {
+                visitFloor();
             }
         }
     }
@@ -78,6 +80,15 @@ public class Elevator extends Thread {
 
     private boolean selectedFloorsAbove() {
         for (int i = actualFloor.getFloorNumber(); i < floors.size(); i++) {
+            if (floors.get(i).isSelected()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean selectedFloorsBelow() {
+        for (int i = actualFloor.getFloorNumber(); i >= 0; i--) {
             if (floors.get(i).isSelected()) {
                 return true;
             }
@@ -113,12 +124,20 @@ public class Elevator extends Thread {
     }
 
     private int getDirection(Floor firstCalledFloor) {
-        if (actualFloor.getDirection() == 0) {
+        if (actualFloor.getFloorNumber() == 0) {
             return DIRECTION_UP;
-        } else if (actualFloor.getDirection() == numberOfFoors - 1) {
+        } else if (actualFloor.getFloorNumber() == numberOfFoors - 1) {
             return DIRECTION_DOWN;
         } else {
-            return firstCalledFloor.getDirection();
+
+            if (selectedFloorsAbove()) {
+                return DIRECTION_UP;
+            }
+
+            if (selectedFloorsBelow()) {
+                return DIRECTION_DOWN;
+            }
+            return DIRECTION_DOWN;
         }
     }
 
