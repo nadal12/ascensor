@@ -116,6 +116,7 @@ public class View extends JFrame implements EventsListener {
                 changeButtonColor(floorButton.getButton(), new Color(255, 127, 127));
                 mvcEvents.getController().notify("floorButton, " + floorButton.getFloor() + ", " + Elevator.DIRECTION_DOWN);
             });
+
             leftButtons.add(floorButton.getButton());
         }
 
@@ -138,6 +139,14 @@ public class View extends JFrame implements EventsListener {
                 changeButtonColor(floorButton.getButton(), new Color(255, 127, 127));
                 mvcEvents.getController().notify("floorButton, " + floorButton.getFloor() + ", " + Elevator.DIRECTION_UP);
             });
+            JLabel label = new JLabel("Planta " + Math.abs(i - numberOfFloors + 1));
+            label.setFont(new Font(label.getName(), Font.PLAIN, 25));
+            label.setVerticalAlignment(SwingConstants.CENTER);
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            label.setOpaque(true);
+            label.setForeground(Color.RED);
+            label.setBackground(new Color(78, 255, 102));
+            leftButtons.add(label);
             leftButtons.add(floorButton.getButton());
         }
 
